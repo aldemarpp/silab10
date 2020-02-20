@@ -26,7 +26,7 @@ const style = {
   },
   submit: {
     marginTop: 15,
-    marginBotton: 20
+    marginBottom: 20
   }
 };
 
@@ -40,7 +40,7 @@ class RegistrarUsuario extends Component {
     }
   };
 
-  onchange = e => {
+  onChange = e => {
     let usuario = Object.assign({}, this.state.usuario);
     usuario[e.target.name] = e.target.value;
     this.setState({
@@ -68,33 +68,36 @@ class RegistrarUsuario extends Component {
               <Grid item md={6} xs={12}>
                 <TextField
                   name="nombre"
-                  fullWidth
                   onChange={this.onChange}
                   value={this.state.usuario.nombre}
+                  fullWidth
                   label="Ingrese su nombre"
                 />
               </Grid>
               <Grid item md={6} xs={12}>
                 <TextField
-                  item
                   name="apellido"
+                  onChange={this.onChange}
+                  value={this.state.usuario.apellido}
                   fullWidth
                   label="Ingrese sus apellidos"
                 />
               </Grid>
               <Grid item md={6} xs={12}>
                 <TextField
-                  item
                   name="email"
+                  onChange={this.onChange}
+                  value={this.state.usuario.email}
                   fullWidth
                   label="Ingrese su e-mail"
-                ></TextField>
+                />
               </Grid>
               <Grid item md={6} xs={12}>
                 <TextField
-                  item
                   type="password"
                   name="password"
+                  onChange={this.onChange}
+                  value={this.state.usuario.password}
                   fullWidth
                   label="Ingrese su password"
                 />
