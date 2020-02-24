@@ -1,7 +1,23 @@
 import React, { Component } from "react";
 import AppBar from "@material-ui/core/AppBar";
-//import Toolbar from "@material-ui/core/Toolbar";
+import { withStyles } from "@material-ui/styles";
+import { compose } from "recompose";
 import BarSession from "./bar/BarSession";
+
+const styles = theme => ({
+  sectionDesktop: {
+    display: "none",
+    [theme.breakpoints.up("md")]: {
+      display: "flex"
+    }
+  },
+  sectionMobile: {
+    display: "flex",
+    [theme.breakpoints.up("md")]: {
+      display: "none"
+    }
+  }
+});
 
 class AppNavbar extends Component {
   render() {
@@ -15,4 +31,4 @@ class AppNavbar extends Component {
   }
 }
 
-export default AppNavbar;
+export default compose(withStyles(styles))(AppNavbar);

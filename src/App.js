@@ -8,6 +8,9 @@ import theme from "./theme/theme";
 import Grid from "@material-ui/core/Grid";
 import RegistrarUsuario from "./components/seguridad/RegistrarUsuario";
 import Login from "./components/seguridad/Login";
+import PerfilUsuario from "./components/seguridad/PerfilUsuario";
+import NuevoInmueble from "./components/vistas/NuevoInmueble";
+import EditarInmueble from "./components/vistas/EditarInmueble";
 
 function App(props) {
   return (
@@ -24,6 +27,17 @@ function App(props) {
               component={RegistrarUsuario}
             ></Route>
             <Route path="/auth/login" exact component={Login}></Route>
+            <Route path="/auth/perfil" exact component={PerfilUsuario}></Route>
+            <Route
+              path="/inmueble/nuevo"
+              exact
+              component={NuevoInmueble}
+            ></Route>
+            <Route
+              path="/inmueble/editar"
+              exact
+              component={EditarInmueble}
+            ></Route>
           </Switch>
         </Grid>
       </MuiThemeProvider>

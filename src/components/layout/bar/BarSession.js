@@ -4,14 +4,16 @@ import {
   Toolbar,
   Typography,
   IconButton,
-  Avatar
+  Avatar,
+  Button
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
 import { MenuDerecha } from "./menuDerecha";
 import { MenuIzquierda } from "./menuIzquierda";
 import fotoUsuarioTemp from "../../../logo.svg";
+import { compose } from "recompose";
+import { withRouter } from "react-router-dom";
 
 const styles = theme => ({
   sectionDesktop: {
@@ -40,7 +42,7 @@ const styles = theme => ({
     color: "#212121"
   },
   list: {
-    width: 220
+    width: 250
   }
 });
 
@@ -105,7 +107,7 @@ class BarSession extends Component {
             <IconButton color="inherit" component={Link} to="">
               <i className="material-icons">mail_outline</i>
             </IconButton>
-            <Button color="inherit" onClick={this.toggleDrawer}>
+            <Button color="inherit" onClick={this.salirSesionApp}>
               Cerrar Sesión
             </Button>
             <Button color="inherit">Login</Button>
@@ -125,4 +127,4 @@ class BarSession extends Component {
   }
 }
 
-export default withStyles(styles)(BarSession);
+export default compose(withRouter, withStyles(styles))(BarSession);
