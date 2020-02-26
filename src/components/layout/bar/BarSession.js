@@ -1,30 +1,30 @@
 import React, { Component } from "react";
 import {
-  Drawer,
   Toolbar,
   Typography,
+  Button,
   IconButton,
-  Avatar,
-  Button
+  Drawer,
+  Avatar
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
-import { Link } from "react-router-dom";
-import { MenuDerecha } from "./menuDerecha";
-import { MenuIzquierda } from "./menuIzquierda";
-import fotoUsuarioTemp from "../../../logo.svg";
 import { compose } from "recompose";
+import { MenuDerecha } from "./menuDerecha";
+//import { MenuIzquierda } from "./menuIzquierda";
+import { Link } from "react-router-dom";
+import fotoUsuarioTemp from "../../../logo.svg";
 import { withRouter } from "react-router-dom";
 
 const styles = theme => ({
   sectionDesktop: {
     display: "none",
-    [theme.breakpoints.up("md")]: {
+    [theme.breakpoints.up("sm")]: {
       display: "flex"
     }
   },
   sectionMobile: {
     display: "flex",
-    [theme.breakpoints.up("md")]: {
+    [theme.breakpoints.up("sm")]: {
       display: "none"
     }
   },
@@ -37,12 +37,12 @@ const styles = theme => ({
   },
   listItemText: {
     fontSize: "14px",
-    fontWeight: 600,
-    paddingLeft: "15px",
+    fontWeight: 200,
+    paddingLeft: "5px",
     color: "#212121"
   },
   list: {
-    width: 250
+    width: 200
   }
 });
 
@@ -60,24 +60,10 @@ class BarSession extends Component {
 
   render() {
     const { classes } = this.props;
-    // let textoUsuario = usuario.nombre + " " + usuario.apellido;
+    let textoUsuario = "@aldemarpp";
 
     return (
       <div>
-        <Drawer
-          open={this.state.left}
-          onClose={this.toggleDrawer("left", false)}
-          anchor="left"
-        >
-          <div
-            role="button"
-            onClick={this.toggleDrawer("left", false)}
-            onKeyDown={this.toggleDrawer("left", false)}
-          >
-            <MenuIzquierda classes={classes} />
-          </div>
-        </Drawer>
-
         <Drawer
           open={this.state.right}
           onClose={this.toggleDrawer("right", false)}
@@ -90,28 +76,32 @@ class BarSession extends Component {
           >
             <MenuDerecha
               classes={classes}
-              //textoUsuario={textoUsuario}
+              textoUsuario={textoUsuario}
               fotoUsuario={fotoUsuarioTemp}
-              salirSesion={this.salirSesion}
+              salirSesion="Cerrar Sesion"
             />
           </div>
         </Drawer>
 
         <Toolbar>
-          <IconButton color="inherit" onClick={this.toggleDrawer("left", true)}>
-            <i className="material-icons">menu</i>
-          </IconButton>
           <Typography variant="h6">Silab</Typography>
           <div className={classes.grow}></div>
           <div className={classes.sectionDesktop}>
-            <IconButton color="inherit" component={Link} to="">
+            <IconButton color="inherit" component={Link} to="/inmueble/editar">
               <i className="material-icons">mail_outline</i>
             </IconButton>
-            <Button color="inherit" onClick={this.salirSesionApp}>
-              Cerrar Sesión
+            <Button color="inherit" onClick="">
+              Salir
             </Button>
-            <Button color="inherit">Login</Button>
+            <Button color="inherit">{textoUsuario}</Button>
             <Avatar src={fotoUsuarioTemp}></Avatar>
+
+            <IconButton
+              color="inherit"
+              onClick={this.toggleDrawer("right", true)}
+            >
+              <i className="material-icons">menu</i>
+            </IconButton>
           </div>
           <div className={classes.sectionMobile}>
             <IconButton

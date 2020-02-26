@@ -1,134 +1,183 @@
-import React, { Component } from "react";
+import React, { useState, Fragment } from "react";
 import {
   Container,
-  Grid,
+  Typography,
   TextField,
-  Button,
   Avatar,
-  Typography
+  Grid,
+  Button
 } from "@material-ui/core";
-import fotoUsuarioTemp from "../../logo.svg";
+import reactFoto from "../../logo.svg";
 import ImageUploader from "react-images-upload";
-import uuid from "uuid";
 
 const style = {
   paper: {
-    marginTop: 8,
+    margin: 9,
     display: "flex",
     flexDirection: "column",
     alignItems: "center"
   },
+  avatar: {
+    margin: 8,
+    backgroundColor: "#e53935"
+  },
   form: {
     width: "100%",
-    marginTop: 20
+    marginTop: 15
   },
   submit: {
-    marginTop: 15,
+    marginTop: 30,
     marginBottom: 20
+  },
+  error: {
+    backgroundColor: "red",
+    color: "white",
+    padding: "10px",
+    fontSize: "20px",
+    textAlign: "center"
   }
 };
 
-class PerfilUsuario extends Component {
-  state = {
-    usuario: {
+const PerfilUsuario = () => {
+  //crear state de usuario
+  const [perfil, cambiarPerfil] = useState({
+    codigo: "",
+    nombre: "",
+    apellido: "",
+    email: "",
+    password: "",
+    telefono: "",
+    foto: ""
+  });
+
+  //crear state de error
+  const [error, actualizarError] = useState(false);
+
+  //funcion para cuando el usuario escribe en los inputs
+  const cambiarDato = e => {
+    const { name, value } = e.target;
+    cambiarPerfil(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  //Extraer los valores de los inputs
+  const { codigo, nombre, apellido, email, password, telefono } = perfil;
+
+  //funcion para cuando el usuario envia la informacion
+  const submitPerfil = e => {
+    e.preventDefault();
+    if (
+      codigo === "" ||
+      nombre === "" ||
+      apellido === "" ||
+      email === "" ||
+      password === "" ||
+      telefono === ""
+    ) {
+      actualizarError(true);
+      return;
+    }
+
+    console.log(perfil);
+    actualizarError(false);
+
+    //Agregar Usuario o Actualizar
+
+    //Reiniciar el form
+    cambiarPerfil({
+      codigo: "",
       nombre: "",
       apellido: "",
       email: "",
-      telefono: "",
-      id: "",
-      foto: ""
-    }
-  };
-
-  onChange2 = e => {
-    let usuario = Object.assign({}, this.state.usuario);
-    usuario[e.target.name] = e.target.value;
-    this.setState({
-      usuario: usuario
+      password: "",
+      telefono: ""
     });
   };
 
-  perfilUsuario = e => {
-    e.preventDefault();
-    console.log("imprimir objeto usuario del state", this.state.usuario);
-  };
-
-  render() {
-    const subirFoto = fotos => {
-      const foto = fotos[0];
-      const claveUnicaFoto = uuid.v4();
-      const nombreFoto = foto.name;
-      const extensionFoto = nombreFoto.split(".").pop();
-      const alias = (
-        nombreFoto.split(".")[0] +
-        "_" +
-        claveUnicaFoto +
-        "." +
-        extensionFoto
-      )
-        .replace(/\s/g, "_")
-        .toLowerCase();
-    };
-
-    let fotoKey = uuid.v4();
-
-    return (
+  return (
+    <Fragment>
       <Container component="main" maxWidth="md" justify="center">
         <div style={style.paper}>
-          <Avatar src={fotoUsuarioTemp}></Avatar>
+          {error ? (
+            <p style={style.error}>¡Todos los campos son obligatorios!</p>
+          ) : null}
+          <Avatar style={style.avatar} src={perfil.foto || reactFoto} />
           <Typography component="h1" variant="h5">
-            Perfil de Usuario
+            Perfil de Cuenta
           </Typography>
-          <form style={style.form}>
-            <Grid container spacing={2}>
-              <Grid item xs={12} md={6}>
+          <form style={style.form} onSubmit={submitPerfil}>
+            <Grid container spacing={1}>
+              <Grid item md={6} xs={12}>
                 <TextField
-                  name="nombre"
                   variant="outlined"
+                  name="codigo"
+                  fullWidth
+                  label="Codigo"
+                  value={codigo}
+                  onChange={cambiarPerfil}
+                />
+              </Grid>
+              <Grid item md={6} xs={12}>
+                <TextField
+                  variant="outlined"
+                  name="nombre"
                   fullWidth
                   label="Nombre"
-                  onChange={this.onChange2}
-                  value={this.state.usuario.nombre}
+                  value={nombre}
+                  onChange={cambiarPerfil}
                 />
               </Grid>
-              <Grid item xs={12} md={6}>
+              <Grid item md={6} xs={12}>
                 <TextField
-                  name="apellido"
                   variant="outlined"
+                  name="apellido"
                   fullWidth
                   label="Apellidos"
-                  onChange={this.onChange2}
-                  value={this.state.usuario.apellido}
+                  value={apellido}
+                  onChange={cambiarPerfil}
                 />
               </Grid>
-              <Grid item xs={12} md={6}>
+              <Grid item md={6} xs={12}>
                 <TextField
+                  variant="outlined"
                   name="email"
-                  variant="outlined"
                   fullWidth
-                  label="E-mail"
-                  onChange={this.onChange2}
-                  value={this.state.usuario.email}
+                  label="Correo"
+                  value={email}
+                  onChange={cambiarPerfil}
                 />
               </Grid>
-              <Grid item xs={12} md={6}>
+              <Grid item md={6} xs={12}>
                 <TextField
-                  name="telefono"
                   variant="outlined"
+                  type="password"
+                  name="password"
                   fullWidth
-                  label="Telefono"
-                  onChange={this.onChange2}
-                  value={this.state.usuario.telefono}
+                  label="Contraseña"
+                  value={password}
+                  onChange={cambiarPerfil}
                 />
               </Grid>
-              <Grid item xs={12} md={12}>
+              <Grid item md={6} xs={12}>
+                <TextField
+                  variant="outlined"
+                  name="telefono"
+                  fullWidth
+                  label="Teléfono"
+                  value={telefono}
+                  onChange={cambiarPerfil}
+                />
+              </Grid>
+              <Grid item md={12} xs={12}>
                 <ImageUploader
                   withIcon={false}
-                  key={fotoKey}
+                  key={1000}
                   singleImage={true}
-                  buttonText="Seleccione una imagen"
-                  onChange={subirFoto}
-                  imgExtension={[".jgp", ".gif", ".png", ".jpeg"]}
+                  buttonText="Seleccione su imagen de perfil"
+                  //onChange={subirFoto}
+                  imgExtension={[".jpg", ".gif", ".png", ".jpeg"]}
                   maxFileSize={5242880}
                 />
               </Grid>
@@ -137,22 +186,20 @@ class PerfilUsuario extends Component {
               <Grid item xs={12} md={6}>
                 <Button
                   type="submit"
-                  fullWidth
                   variant="contained"
-                  size="large"
+                  fullWidth
+                  size="medium"
                   color="primary"
                   style={style.submit}
-                  onClick={this.perfilUsuario}
                 >
-                  Guardar
+                  Registrar
                 </Button>
               </Grid>
             </Grid>
           </form>
         </div>
       </Container>
-    );
-  }
-}
-
+    </Fragment>
+  );
+};
 export default PerfilUsuario;

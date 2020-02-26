@@ -8,7 +8,7 @@ export const MenuIzquierda = ({ classes }) => (
       <ListItem component={Link} button to="/auth/perfil">
         <i className="material-icons">account_box</i>
         <ListItemText
-          className={{ primary: classes.listItemText }}
+          classes={{ primary: classes.listItemText }}
           primary="Perfil"
         />
       </ListItem>
@@ -18,21 +18,21 @@ export const MenuIzquierda = ({ classes }) => (
       <ListItem component={Link} button to="/inmueble/nuevo">
         <i className="material-icons">add_box</i>
         <ListItemText
-          className={{ primary: classes.listItemText }}
+          classes={{ primary: classes.listItemText }}
           primary="Nuevo Inmueble"
         />
       </ListItem>
       <ListItem component={Link} button to="">
         <i className="material-icons">business</i>
         <ListItemText
-          className={{ primary: classes.listItemText }}
+          classes={{ primary: classes.listItemText }}
           primary="Inmuebles"
         />
       </ListItem>
       <ListItem component={Link} button to="/inmueble/editar">
         <i className="material-icons">mail_outline</i>
         <ListItemText
-          className={{ primary: classes.listItemText }}
+          classes={{ primary: classes.listItemText }}
           primary="Mensajes"
         />
       </ListItem>

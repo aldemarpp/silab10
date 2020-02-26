@@ -1,15 +1,21 @@
 import React, { Component } from "react";
 import {
   Container,
+  Paper,
   Grid,
   Breadcrumbs,
-  Typography,
-  Paper,
   Link,
+  Typography,
   TextField,
-  Button
+  Button,
+  Table,
+  TableBody,
+  TableRow,
+  TableCell
 } from "@material-ui/core";
 import HomeIcon from "@material-ui/icons/Home";
+import ImageUploader from "react-images-upload";
+import uuid from "uuid";
 
 const style = {
   container: {
@@ -18,9 +24,9 @@ const style = {
   paper: {
     marginTop: 8,
     display: "flex",
-    flexDirection: " column",
+    flexDirection: "column",
     alignItems: "center",
-    padding: "20",
+    padding: "20px",
     backgroundColor: "#f5f5f5"
   },
   link: {
@@ -34,6 +40,9 @@ const style = {
   submit: {
     marginTop: 15,
     marginBottom: 10
+  },
+  foto: {
+    height: "100px"
   }
 };
 
@@ -44,8 +53,10 @@ class NuevoInmueble extends Component {
       ciudad: "",
       pais: "",
       descripcion: "",
-      interior: ""
-    }
+      interior: "",
+      fotos: []
+    },
+    archivos: []
   };
 
   entraDatoEnEstado = e => {
@@ -56,18 +67,67 @@ class NuevoInmueble extends Component {
     });
   };
 
-  registrarInmueble = e => {
-    e.preventDefault();
-    console.log("imprimir objeto inmueble del state", this.state.inmueble);
+  subirFotos = documentos => {
+    Object.keys(documentos).forEach(function(key) {
+      documentos[key].urlTemp = URL.createObjectURL(documentos[key]);
+    });
+
+    this.setState({
+      archivos: this.state.archivos.concat(documentos)
+    });
+  };
+
+  guardarInmueble = () => {
+    const { archivos, inmueble } = this.state;
+
+    //Crearle a cada image(archivo) un alias, ese alias es la referencia con la cual posteriormente lo invocaras
+    //Ademas ese alias sera almacenado en la base de datos(firestore/firebase)
+
+    Object.keys(archivos).forEach(function(key) {
+      let valorDinamico = Math.floor(new Date().getTime() / 1000);
+      let nombre = archivos[key].name;
+      let extension = nombre.split(".").pop();
+      archivos[key].alias = (
+        nombre.split(".")[0] +
+        "_" +
+        valorDinamico +
+        "." +
+        extension
+      )
+        .replace(/\s/g, "_")
+        .toLowerCase();
+    });
+
+    this.props.firebase.guardarDocumentos(archivos).then(arregloUrls => {
+      inmueble.fotos = arregloUrls;
+      inmueble.propietario = this.props.firebase.auth.currentUser.uid;
+
+      this.props.firebase.db
+        .collection("Inmuebles")
+        .add(inmueble)
+        .then(success => {
+          this.props.history.push("/");
+        });
+    });
+  };
+
+  eliminarFoto = nombreFoto => () => {
+    this.setState({
+      archivos: this.state.archivos.filter(archivo => {
+        return archivo.name !== nombreFoto;
+      })
+    });
   };
 
   render() {
+    let imagenKey = uuid.v4();
+
     return (
       <Container style={style.container}>
         <Paper style={style.paper}>
           <Grid container spacing={3}>
             <Grid item xs={12} md={8}>
-              <Breadcrumbs arial-label="breadcrumbs">
+              <Breadcrumbs aria-label="breadcrumb">
                 <Link color="inherit" style={style.link} href="/">
                   <HomeIcon style={style.homeIcon} />
                   Home
@@ -79,12 +139,13 @@ class NuevoInmueble extends Component {
             <Grid item xs={12} md={12}>
               <TextField
                 name="direccion"
-                label="Direccion del Inmueble"
+                label="Direccion del inmueble"
                 fullWidth
                 onChange={this.entraDatoEnEstado}
                 value={this.state.inmueble.direccion}
               />
             </Grid>
+
             <Grid item xs={12} md={6}>
               <TextField
                 name="ciudad"
@@ -94,25 +155,28 @@ class NuevoInmueble extends Component {
                 value={this.state.inmueble.ciudad}
               />
             </Grid>
+
             <Grid item xs={12} md={6}>
               <TextField
                 name="pais"
-                label="Pais del Inmueble"
+                label="Pais"
                 fullWidth
                 onChange={this.entraDatoEnEstado}
                 value={this.state.inmueble.pais}
               />
             </Grid>
+
             <Grid item xs={12} md={12}>
               <TextField
                 name="descripcion"
-                label="Descripción del Inmueble"
+                label="Descripcion del Inmueble"
                 fullWidth
                 multiline
                 onChange={this.entraDatoEnEstado}
                 value={this.state.inmueble.descripcion}
               />
             </Grid>
+
             <Grid item xs={12} md={12}>
               <TextField
                 name="interior"
@@ -126,7 +190,43 @@ class NuevoInmueble extends Component {
           </Grid>
 
           <Grid container justify="center">
-            <Grid item xs={12} sm={12}>
+            <Grid item xs={12} sm={6}>
+              <ImageUploader
+                key={imagenKey}
+                withIcon={true}
+                buttonText="Seleccione imagenes"
+                onChange={this.subirFotos}
+                imgExtension={[".jpg", ".gif", ".png", ".jpeg"]}
+                maxFileSize={5242880}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <Table>
+                <TableBody>
+                  {this.state.archivos.map((archivo, i) => (
+                    <TableRow key={i}>
+                      <TableCell align="left">
+                        <img src={archivo.urlTemp} style={style.foto} />
+                      </TableCell>
+                      <TableCell>
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          size="small"
+                          onClick={this.eliminarFoto(archivo.name)}
+                        >
+                          Eliminar
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </Grid>
+          </Grid>
+
+          <Grid container justify="center">
+            <Grid item xs={12} md={6}>
               <Button
                 type="button"
                 fullWidth
@@ -134,7 +234,7 @@ class NuevoInmueble extends Component {
                 size="large"
                 color="primary"
                 style={style.submit}
-                onClick={this.registrarInmueble}
+                onClick={this.guardarInmueble}
               >
                 Guardar
               </Button>
