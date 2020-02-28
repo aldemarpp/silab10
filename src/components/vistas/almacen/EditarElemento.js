@@ -37,9 +37,9 @@ const style = {
   }
 };
 
-class EditarInmueble extends Component {
+class EditarElemento extends Component {
   state = {
-    inmueble: {
+    elemento: {
       direccion: "",
       ciudad: "",
       pais: "",
@@ -49,16 +49,16 @@ class EditarInmueble extends Component {
   };
 
   entraDatoEnEstado = e => {
-    let inmueble_ = Object.assign({}, this.state.inmueble);
-    inmueble_[e.target.name] = e.target.value;
+    let elemento_ = Object.assign({}, this.state.elemento);
+    elemento_[e.target.name] = e.target.value;
     this.setState({
-      inmueble: inmueble_
+      elemento: elemento_
     });
   };
 
-  registrarInmueble = e => {
+  registrarElemento = e => {
     e.preventDefault();
-    console.log("imprimir objeto inmueble del state", this.state.inmueble);
+    console.log("imprimir objeto Elemento del state", this.state.Elemento);
   };
 
   render() {
@@ -72,17 +72,17 @@ class EditarInmueble extends Component {
                   <HomeIcon style={style.homeIcon} />
                   Home
                 </Link>
-                <Typography color="textPrimary">Editar Inmueble</Typography>
+                <Typography color="textPrimary">Editar Elemento</Typography>
               </Breadcrumbs>
             </Grid>
 
             <Grid item xs={12} md={12}>
               <TextField
                 name="direccion"
-                label="Direccion del Inmueble"
+                label="Direccion del Elemento"
                 fullWidth
                 onChange={this.entraDatoEnEstado}
-                value={this.state.inmueble.direccion}
+                value={this.state.elemento.direccion}
               />
             </Grid>
             <Grid item xs={12} md={6}>
@@ -91,36 +91,36 @@ class EditarInmueble extends Component {
                 label="Ciudad"
                 fullWidth
                 onChange={this.entraDatoEnEstado}
-                value={this.state.inmueble.ciudad}
+                value={this.state.elemento.ciudad}
               />
             </Grid>
             <Grid item xs={12} md={6}>
               <TextField
                 name="pais"
-                label="Pais del Inmueble"
+                label="Pais del Elemento"
                 fullWidth
                 onChange={this.entraDatoEnEstado}
-                value={this.state.inmueble.pais}
+                value={this.state.elemento.pais}
               />
             </Grid>
             <Grid item xs={12} md={12}>
               <TextField
                 name="descripcion"
-                label="Descripción del Inmueble"
+                label="Descripción del Elemento"
                 fullWidth
                 multiline
                 onChange={this.entraDatoEnEstado}
-                value={this.state.inmueble.descripcion}
+                value={this.state.elemento.descripcion}
               />
             </Grid>
             <Grid item xs={12} md={12}>
               <TextField
                 name="interior"
-                label="Interior del Inmueble"
+                label="Interior del Elemento"
                 fullWidth
                 multiline
                 onChange={this.entraDatoEnEstado}
-                value={this.state.inmueble.interior}
+                value={this.state.elemento.interior}
               />
             </Grid>
           </Grid>
@@ -134,7 +134,7 @@ class EditarInmueble extends Component {
                 size="large"
                 color="primary"
                 style={style.submit}
-                onClick={this.registrarInmueble}
+                onClick={this.registrarElemento}
               >
                 Guardar
               </Button>
@@ -146,4 +146,4 @@ class EditarInmueble extends Component {
   }
 }
 
-export default EditarInmueble;
+export default EditarElemento;

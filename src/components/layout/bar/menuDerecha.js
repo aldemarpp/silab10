@@ -8,15 +8,10 @@ import {
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 
-export const MenuDerecha = ({
-  classes,
-  textoUsuario,
-  fotoUsuario,
-  salirSesion
-}) => (
+export const MenuDerecha = ({ classes, textoUsuario, fotoUsuario }) => (
   <div className={classes.list}>
     <List>
-      <ListItem button component={Link} to="/auth/registrarUsuario">
+      <ListItem button component={Link} to="/auth/perfil">
         <Avatar src={fotoUsuario} />
         <ListItemText
           classes={{ primary: classes.ListItemText }}
@@ -31,40 +26,50 @@ export const MenuDerecha = ({
           primary="Perfil"
         />
       </ListItem>
-    </List>
-    <Divider />
-    <list>
-      <ListItem component={Link} button to="/inmueble/nuevo">
-        <i className="material-icons">add_box</i>
-        <ListItemText
-          classes={{ primary: classes.listItemText }}
-          primary="Nuevo Inmueble"
-        />
-      </ListItem>
-      <ListItem component={Link} button to="">
+      <Divider />
+      <ListItem component={Link} button to="/elementos">
         <i className="material-icons">business</i>
         <ListItemText
           classes={{ primary: classes.listItemText }}
-          primary="Inmuebles"
+          primary="Elementos"
         />
       </ListItem>
-      <ListItem component={Link} button to="/inmueble/editar">
+      <ListItem component={Link} button to="/mantenimientos">
+        <i className="material-icons">add_box</i>
+        <ListItemText
+          classes={{ primary: classes.listItemText }}
+          primary="Mantenimientos"
+        />
+      </ListItem>
+      <ListItem component={Link} button to="/trabajos">
+        <i className="material-icons">add_box</i>
+        <ListItemText
+          classes={{ primary: classes.listItemText }}
+          primary="Trabajos"
+        />
+      </ListItem>
+      <ListItem component={Link} button to="/">
         <i className="material-icons">mail_outline</i>
         <ListItemText
           classes={{ primary: classes.listItemText }}
           primary="Mensajes"
         />
       </ListItem>
+      <ListItem component={Link} button to="/usuarios">
+        <i className="material-icons">account_box</i>
+        <ListItemText
+          classes={{ primary: classes.listItemText }}
+          primary="Usuarios"
+        />
+      </ListItem>
       <Divider />
-      <List>
-        <ListItem component={Link} button to="Cerrar Sesión">
-          <i className="material-icons">account_box</i>
-          <ListItemText
-            classes={{ primary: classes.listItemText }}
-            primary="Cerrar Sesión"
-          />
-        </ListItem>
-      </List>
-    </list>
+      <ListItem component={Link} button to="Cerrar Sesión">
+        <i className="material-icons">account_box</i>
+        <ListItemText
+          classes={{ primary: classes.listItemText }}
+          primary="Cerrar Sesión"
+        />
+      </ListItem>
+    </List>
   </div>
 );

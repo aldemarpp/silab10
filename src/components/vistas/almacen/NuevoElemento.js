@@ -16,6 +16,7 @@ import {
 import HomeIcon from "@material-ui/icons/Home";
 import ImageUploader from "react-images-upload";
 import uuid from "uuid";
+import { Autocomplete } from "@material-ui/lab";
 
 const style = {
   container: {
@@ -46,24 +47,28 @@ const style = {
   }
 };
 
-class NuevoInmueble extends Component {
+class NuevoElemento extends Component {
   state = {
-    inmueble: {
-      direccion: "",
-      ciudad: "",
-      pais: "",
-      descripcion: "",
-      interior: "",
+    elemento: {
+      codigo: "",
+      nombre: "",
+      stock: "",
+      horas_uso: "",
+      estado: "",
+      categoria: "",
+      tiempo_prestamo: "",
+      sancion: "",
+      multa: "",
       fotos: []
     },
     archivos: []
   };
 
   entraDatoEnEstado = e => {
-    let inmueble_ = Object.assign({}, this.state.inmueble);
-    inmueble_[e.target.name] = e.target.value;
+    let elemento_ = Object.assign({}, this.state.elemento);
+    elemento_[e.target.name] = e.target.value;
     this.setState({
-      inmueble: inmueble_
+      elemento: elemento_
     });
   };
 
@@ -77,8 +82,8 @@ class NuevoInmueble extends Component {
     });
   };
 
-  guardarInmueble = () => {
-    const { archivos, inmueble } = this.state;
+  guardarElemento = () => {
+    const { archivos, elemento } = this.state;
 
     //Crearle a cada image(archivo) un alias, ese alias es la referencia con la cual posteriormente lo invocaras
     //Ademas ese alias sera almacenado en la base de datos(firestore/firebase)
@@ -99,12 +104,12 @@ class NuevoInmueble extends Component {
     });
 
     this.props.firebase.guardarDocumentos(archivos).then(arregloUrls => {
-      inmueble.fotos = arregloUrls;
-      inmueble.propietario = this.props.firebase.auth.currentUser.uid;
+      elemento.fotos = arregloUrls;
+      elemento.propietario = this.props.firebase.auth.currentUser.uid;
 
       this.props.firebase.db
-        .collection("Inmuebles")
-        .add(inmueble)
+        .collection("Elementos")
+        .add(elemento)
         .then(success => {
           this.props.history.push("/");
         });
@@ -120,77 +125,121 @@ class NuevoInmueble extends Component {
   };
 
   render() {
+    const estadoele = [{ state: "Activo" }, { state: "Inactivo" }];
+    const detalles = [{ category: "A" }, { category: "B" }, { category: "C" }];
+    const detalles1 = [
+      { time: "2 Horas" },
+      { time: "4 Horas" },
+      { time: "1 Día" }
+    ];
+    const detalles2 = [
+      { sancions: "1 Semana" },
+      { sancions: "1 Mes" },
+      { sancions: "1 Semestre" }
+    ];
+    const detalles3 = [{ mult: "$1000" }, { mult: "$2000" }, { mult: "$5000" }];
+
     let imagenKey = uuid.v4();
 
     return (
       <Container style={style.container}>
         <Paper style={style.paper}>
           <Grid container spacing={3}>
-            <Grid item xs={12} md={8}>
+            <Grid item xs={12} md={10}>
               <Breadcrumbs aria-label="breadcrumb">
-                <Link color="inherit" style={style.link} href="/">
+                <Link color="inherit" style={style.link} href="/elementos">
                   <HomeIcon style={style.homeIcon} />
-                  Home
+                  Elementos
                 </Link>
-                <Typography color="textPrimary">Nuevo Inmueble</Typography>
+                <Typography color="textPrimary">Actualizar Elemento</Typography>
               </Breadcrumbs>
             </Grid>
 
-            <Grid item xs={12} md={12}>
+            <Grid item xs={6} md={4}>
               <TextField
-                name="direccion"
-                label="Direccion del inmueble"
+                name="nombre"
+                label="Nombre del elemento"
                 fullWidth
                 onChange={this.entraDatoEnEstado}
-                value={this.state.inmueble.direccion}
+                value={this.state.elemento.nombre}
               />
             </Grid>
 
-            <Grid item xs={12} md={6}>
+            <Grid item xs={6} md={4}>
               <TextField
-                name="ciudad"
-                label="Ciudad"
+                name="stock"
+                label="Stock"
                 fullWidth
                 onChange={this.entraDatoEnEstado}
-                value={this.state.inmueble.ciudad}
+                value={this.state.elemento.stock}
               />
             </Grid>
 
-            <Grid item xs={12} md={6}>
+            <Grid item xs={6} md={4}>
               <TextField
-                name="pais"
-                label="Pais"
+                name="horas de uso"
+                label="Horas de uso"
                 fullWidth
                 onChange={this.entraDatoEnEstado}
-                value={this.state.inmueble.pais}
+                value={this.state.elemento.horas_uso}
               />
             </Grid>
 
-            <Grid item xs={12} md={12}>
-              <TextField
-                name="descripcion"
-                label="Descripcion del Inmueble"
-                fullWidth
-                multiline
-                onChange={this.entraDatoEnEstado}
-                value={this.state.inmueble.descripcion}
+            <Grid item xs={6} md={4}>
+              <Autocomplete
+                id="combo-box-demo"
+                options={estadoele}
+                getOptionLabel={option => option.state}
+                renderInput={params => (
+                  <TextField {...params} label="Seleccione un estado" />
+                )}
               />
             </Grid>
 
-            <Grid item xs={12} md={12}>
-              <TextField
-                name="interior"
-                label="Interior del Inmueble"
-                fullWidth
-                multiline
-                onChange={this.entraDatoEnEstado}
-                value={this.state.inmueble.interior}
+            <Grid item xs={6} md={4}>
+              <Autocomplete
+                id="combo-box-demo"
+                options={detalles}
+                getOptionLabel={option => option.category}
+                renderInput={params => (
+                  <TextField {...params} label="Seleccione una categoria" />
+                )}
+              />
+            </Grid>
+            <Grid item xs={6} md={4}>
+              <Autocomplete
+                id="combo-box-demo"
+                options={detalles1}
+                getOptionLabel={option => option.time}
+                renderInput={params => (
+                  <TextField {...params} label="Seleccione el tiempo" />
+                )}
+              />
+            </Grid>
+            <Grid item xs={6} md={4}>
+              <Autocomplete
+                id="combo-box-demo"
+                options={detalles2}
+                getOptionLabel={option => option.sancions}
+                renderInput={params => (
+                  <TextField {...params} label="Seleccione la sanción" />
+                )}
+              />
+            </Grid>
+            <Grid item xs={6} md={4}>
+              <Autocomplete
+                id="combo-box-demo"
+                options={detalles3}
+                getOptionLabel={option => option.mult}
+                renderInput={params => (
+                  <TextField {...params} label="Seleccione la multa" />
+                )}
               />
             </Grid>
           </Grid>
 
           <Grid container justify="center">
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={6} sm={6}>
               <ImageUploader
                 key={imagenKey}
                 withIcon={true}
@@ -200,7 +249,7 @@ class NuevoInmueble extends Component {
                 maxFileSize={5242880}
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={6} sm={6}>
               <Table>
                 <TableBody>
                   {this.state.archivos.map((archivo, i) => (
@@ -226,15 +275,15 @@ class NuevoInmueble extends Component {
           </Grid>
 
           <Grid container justify="center">
-            <Grid item xs={12} md={6}>
+            <Grid item xs={6} md={4}>
               <Button
                 type="button"
                 fullWidth
                 variant="contained"
-                size="large"
+                size="medium"
                 color="primary"
                 style={style.submit}
-                onClick={this.guardarInmueble}
+                onClick={this.guardarElemento}
               >
                 Guardar
               </Button>
@@ -246,4 +295,4 @@ class NuevoInmueble extends Component {
   }
 }
 
-export default NuevoInmueble;
+export default NuevoElemento;
