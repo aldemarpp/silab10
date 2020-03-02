@@ -1,19 +1,27 @@
 import React, { useState } from "react";
 import {
   Container,
-  Typography,
-  TextField,
   Paper,
+  Grid,
   Breadcrumbs,
   Link,
-  Grid,
+  IconButton,
+  Collapse,
+  Typography,
+  TextField,
   Button
 } from "@material-ui/core";
-
 import HomeIcon from "@material-ui/icons/Home";
-import { Autocomplete } from "@material-ui/lab";
+import { Alert, Autocomplete } from "@material-ui/lab";
+import { Close as CloseIcon } from "@material-ui/icons";
+//Mantenimientosimport fotoUsuarioTemp from "../../../../logo.svg";
+//Mantenimientosimport ImageUploader from "react-images-upload";
+//Mantenimientosimport { v4 as uuidv4 } from "uuid";
 
 const style = {
+  container: {
+    paddingTop: "20px"
+  },
   paper: {
     marginTop: 8,
     display: "flex",
@@ -21,9 +29,6 @@ const style = {
     alignItems: "center",
     padding: "20px",
     backgroundColor: "#f5f5f5"
-  },
-  container: {
-    paddingTop: "8px"
   },
   link: {
     display: "flex"
@@ -34,19 +39,21 @@ const style = {
     marginRight: "4px"
   },
   form: {
-    width: "100%",
-    marginTop: 15
+    width: "100%"
   },
   submit: {
     marginTop: 30,
     marginBottom: 20
   },
+  foto: {
+    height: "100px"
+  },
+  avatar: {
+    margin: 25,
+    backgroundColor: "#e53935"
+  },
   error: {
-    backgroundColor: "red",
-    color: "white",
-    padding: "10px",
-    fontSize: "20px",
-    textAlign: "center"
+    marginTop: 20
   }
 };
 
@@ -107,21 +114,41 @@ const NuevoTrabajo = () => {
       justify="center"
     >
       <Paper style={style.paper}>
-        {error ? (
-          <p style={style.error}>¡Todos los campos son obligatorios!</p>
-        ) : null}
+        <Grid container spacing={2}>
+          <Grid item xs={12} md={12}>
+            <Breadcrumbs aria-label="breadcrumb">
+              <Link color="inherit" style={style.link} href="/trabajos">
+                <HomeIcon style={style.homeIcon} />
+                Trabajos
+              </Link>
+              <Typography color="textPrimary">Registrar Trabajo</Typography>
+            </Breadcrumbs>
+          </Grid>
+        </Grid>
+
+        <Collapse in={error} style={style.error}>
+          <Alert
+            variant="filled"
+            severity="error"
+            action={
+              <IconButton
+                aria-label="close"
+                color="inherit"
+                onClick={() => {
+                  actualizarError(false);
+                }}
+              >
+                <CloseIcon fontSize="inherit" />
+              </IconButton>
+            }
+          >
+            ¡Tiene que llenar todos los campos!
+          </Alert>
+        </Collapse>
+
         <form style={style.form} onSubmit={submitPerfil}>
-          <Grid container spacing={3}>
-            <Grid item xs={12} md={10}>
-              <Breadcrumbs aria-label="breadcrumb">
-                <Link color="inherit" style={style.link} href="/trabajos">
-                  <HomeIcon style={style.homeIcon} />
-                  Trabajos
-                </Link>
-                <Typography color="textPrimary">Registrar Trabajos</Typography>
-              </Breadcrumbs>
-            </Grid>
-            <Grid item md={6} xs={6}>
+          <Grid container spacing={2}>
+            <Grid item xs={6} md={6}>
               <Autocomplete
                 id="combo-box-demo"
                 options={element}
@@ -131,14 +158,14 @@ const NuevoTrabajo = () => {
                 )}
               />
             </Grid>
-            <Grid item md={5} xs={6}>
+            <Grid item md={6} xs={6}>
               <TextField
                 name="descripcion"
                 fullWidth
                 multiline
                 label="Descripción"
                 value={descripcion}
-                onChange={cambiarPerfil}
+                onChange={cambiarDato}
               />
             </Grid>
             <Grid item md={3} xs={6}>
@@ -147,22 +174,22 @@ const NuevoTrabajo = () => {
                 fullWidth
                 label="Registrado por"
                 value={registro}
-                onChange={cambiarPerfil}
+                onChange={cambiarDato}
               />
             </Grid>
-          </Grid>
-          <Grid container justify="center">
-            <Grid item xs={6} md={4}>
-              <Button
-                type="submit"
-                variant="contained"
-                fullWidth
-                size="medium"
-                color="primary"
-                style={style.submit}
-              >
-                Guardar
-              </Button>
+            <Grid container justify="center">
+              <Grid item xs={6} md={4}>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  fullWidth
+                  size="medium"
+                  color="primary"
+                  style={style.submit}
+                >
+                  Guardar
+                </Button>
+              </Grid>
             </Grid>
           </Grid>
         </form>

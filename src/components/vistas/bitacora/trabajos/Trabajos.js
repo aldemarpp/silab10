@@ -12,9 +12,7 @@ import {
   Grid,
   Breadcrumbs,
   Link,
-  Typography,
-  TextField,
-  Button
+  Typography
 } from "@material-ui/core";
 
 import HomeIcon from "@material-ui/icons/Home";
@@ -25,7 +23,7 @@ const style = {
     paddingTop: "40px"
   },
   container: {
-    paddingTop: "8px"
+    paddingTop: "20px"
   },
   paper: {
     marginTop: 8,
@@ -75,7 +73,7 @@ function Trabajos() {
     >
       <Paper style={style.paper}>
         <Grid container spacing={3}>
-          <Grid item xs={12} md={10}>
+          <Grid item xs={12} md={12}>
             <Breadcrumbs aria-label="breadcrumb">
               <Link color="inherit" style={style.link} href="">
                 <HomeIcon style={style.homeIcon} />

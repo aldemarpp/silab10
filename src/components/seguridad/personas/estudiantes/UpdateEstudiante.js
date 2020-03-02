@@ -1,27 +1,29 @@
 import React, { useState, Fragment } from "react";
 import {
   Container,
-  Typography,
-  TextField,
   Paper,
+  Grid,
   Breadcrumbs,
   Link,
-  Avatar,
   IconButton,
   Collapse,
-  Grid,
+  Typography,
+  TextField,
   Button
 } from "@material-ui/core";
 import HomeIcon from "@material-ui/icons/Home";
 import { Alert, Autocomplete } from "@material-ui/lab";
 import { Close as CloseIcon } from "@material-ui/icons";
-import fotoUsuarioTemp from "../../../../logo.svg";
-import ImageUploader from "react-images-upload";
-import { v4 as uuidv4 } from "uuid";
+//import fotoUsuarioTemp from "../../../../logo.svg";
+//import ImageUploader from "react-images-upload";
+//import { v4 as uuidv4 } from "uuid";
 
 const style = {
+  container: {
+    paddingTop: "20px"
+  },
   paper: {
-    marginTop: 20,
+    marginTop: 8,
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -43,6 +45,9 @@ const style = {
     marginTop: 30,
     marginBottom: 20
   },
+  foto: {
+    height: "100px"
+  },
   avatar: {
     margin: 25,
     backgroundColor: "#e53935"
@@ -52,7 +57,7 @@ const style = {
   }
 };
 
-const NuevoUsuario = props => {
+const UpdateEstudiante = props => {
   //crear state de usuario
   const [perfil, cambiarPerfil] = useState({
     codigo: "",
@@ -135,11 +140,6 @@ const NuevoUsuario = props => {
     });
   };
 
-  const tipos = [
-    { clase: "Administrador" },
-    { clase: "Laboratorista" },
-    { clase: "Beca-Trabajo" }
-  ];
   const programas = [
     { clase: "Ingeniería Civil" },
     { clase: "Ingeniería Mecánica" },
@@ -148,47 +148,28 @@ const NuevoUsuario = props => {
   const documentos = [{ clase: "CC" }, { clase: "TI" }];
   const estados = [{ condicion: "Activo" }, { condicion: "Inactivo" }];
 
-  const subirFoto = fotos => {
-    //1. Capturar la imagen
-    const foto = fotos[0];
-    //2. Generar codigo para la imagen
-    const claveUnicaFoto = uuidv4();
-    //3. Obtener el nombre de la foto
-    const nombreFoto = foto.name;
-    //4. Obtener la extencion de la imagen
-    const extensionFoto = nombreFoto.split(".").pop();
-    //5. Crear el nuevo nombre para la imagen
-    //5.1 divide el nombre de la foto donde encuentra un punto y toma la primera parte => Imagen 1.png = 'image'+'png'
-    //5.2 agrega un _ despues de la primera parte =>'imagen 1_'
-    //5.3 agrega la clave unica => 'Imagen 1_51223678'
-    //5.4 agrega la extencion => 'Imagen 1_51223678.png'
-    //5.5 reemplaza el espacio con _ => 'Imagen_1_51223678.png'
-    //5.6 cambia el nombre a minuscula => 'imagen_1_51223678.png'
-    const alias = (
-      nombreFoto.split(".")[0] +
-      "_" +
-      claveUnicaFoto +
-      "." +
-      extensionFoto
-    ).replace(/\s/g, "_").toLowerCase;
-
-    console.log(alias);
-  };
-
   return (
     <Fragment>
-      <Container component="main" maxWidth="md" justify="center">
+      <Container
+        style={style.container}
+        component="main"
+        maxWidth="md"
+        justify="center"
+      >
         <Paper style={style.paper}>
-          <Grid container spacing={2} item xs={12} md={12}>
-            <Breadcrumbs aria-label="breadcrumb">
-              <Link color="inherit" style={style.link} href="/estudiantes">
-                <HomeIcon style={style.homeIcon} />
-                Estudiantes
-              </Link>
-              <Typography color="textPrimary">Actualizar Estudiante</Typography>
-            </Breadcrumbs>
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={12}>
+              <Breadcrumbs aria-label="breadcrumb">
+                <Link color="inherit" style={style.link} href="/estudiantes">
+                  <HomeIcon style={style.homeIcon} />
+                  Estudiantes
+                </Link>
+                <Typography color="textPrimary">
+                  Actualizar Estudiante
+                </Typography>
+              </Breadcrumbs>
+            </Grid>
           </Grid>
-          <Avatar style={style.avatar} src={fotoUsuarioTemp}></Avatar>
 
           <Collapse in={error} style={style.error}>
             <Alert
@@ -229,7 +210,7 @@ const NuevoUsuario = props => {
                   value={nombre}
                   onChange={cambiarDato}
                   fullWidth
-                  label="Ingrese su nombre"
+                  label="Nombre"
                 />
               </Grid>
               <Grid item md={6} xs={6}>
@@ -238,7 +219,7 @@ const NuevoUsuario = props => {
                   value={apellidos}
                   onChange={cambiarDato}
                   fullWidth
-                  label="Ingrese sus apellidos"
+                  label="Apellidos"
                 />
               </Grid>
               <Grid item md={6} xs={6}>
@@ -280,7 +261,7 @@ const NuevoUsuario = props => {
                   value={documento}
                   onChange={cambiarDato}
                   fullWidth
-                  label="Ingrese su documento"
+                  label="N° de documento"
                 />
               </Grid>
               <Grid item md={6} xs={6}>
@@ -289,7 +270,7 @@ const NuevoUsuario = props => {
                   value={dirección}
                   onChange={cambiarDato}
                   fullWidth
-                  label="Ingrese su Dirección"
+                  label="Dirección"
                 />
               </Grid>
               <Grid item md={6} xs={6}>
@@ -298,7 +279,7 @@ const NuevoUsuario = props => {
                   value={email}
                   onChange={cambiarDato}
                   fullWidth
-                  label="Ingrese su e-mail"
+                  label="E-mail"
                 />
               </Grid>
               <Grid item md={6} xs={6}>
@@ -346,30 +327,20 @@ const NuevoUsuario = props => {
                   )}
                 />
               </Grid>
-              <Grid item md={12} xs={12}>
-                <ImageUploader
-                  withIcon={false}
-                  key={1000}
-                  singleImage={true}
-                  buttonText="Seleccione su imagen de perfil"
-                  onChange={subirFoto}
-                  imgExtension={[".jpg", ".gif", ".png", ".jpeg"]}
-                  maxFileSize={5242880}
-                />
-              </Grid>
-            </Grid>
-            <Grid container justify="center">
-              <Grid item xs={6} md={4}>
-                <Button
-                  type="submit"
-                  variant="contained"
-                  fullWidth
-                  size="medium"
-                  color="primary"
-                  style={style.submit}
-                >
-                  Guardar
-                </Button>
+
+              <Grid container justify="center">
+                <Grid item xs={6} md={4}>
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    fullWidth
+                    size="medium"
+                    color="primary"
+                    style={style.submit}
+                  >
+                    Guardar
+                  </Button>
+                </Grid>
               </Grid>
             </Grid>
           </form>
@@ -378,4 +349,4 @@ const NuevoUsuario = props => {
     </Fragment>
   );
 };
-export default NuevoUsuario;
+export default UpdateEstudiante;

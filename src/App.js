@@ -11,7 +11,7 @@ import UpdateEstudiante from "./components/seguridad/personas/estudiantes/Update
 import Laboratorios from "./components/vistas/almacen/laboratorios/Laboratorios";
 import UpdateLaboratorio from "./components/vistas/almacen/laboratorios/UpdateLaboratorio";
 import NuevoUsuario from "./components/seguridad/usuarios/NuevoUsuario";
-import RegistrarUsuario from "./components/seguridad/usuarios/RegistrarUsuario";
+//import RegistrarUsuario from "./components/seguridad/usuarios/RegistrarUsuario";
 import PerfilUsuario from "./components/seguridad/usuarios/PerfilUsuario";
 import Login from "./components/seguridad/Login";
 import NuevoElemento from "./components/vistas/almacen/NuevoElemento";
@@ -23,6 +23,7 @@ import EditarMantenimiento from "./components/vistas/bitacora/mantenimientos/Edi
 import Trabajos from "./components/vistas/bitacora/trabajos/Trabajos";
 import NuevoTrabajo from "./components/vistas/bitacora/trabajos/NuevoTrabajo";
 import EditarTrabajo from "./components/vistas/bitacora/trabajos/EditarTrabajo";
+import NuevoPrestamo from "./components/vistas/bitacora/prestamos/NuevoPrestamo";
 
 function App(props) {
   return (
@@ -43,6 +44,8 @@ function App(props) {
               exact
               component={EditarElemento}
             ></Route>
+
+            <Route path="/prestamo/nuevo" exact component={NuevoPrestamo} />
             <Route path="/auth/login" exact component={Login}></Route>
             <Route path="/auth/perfil" exact component={PerfilUsuario}></Route>
             <Route path="/usuarios" exact component={Usuarios}></Route>

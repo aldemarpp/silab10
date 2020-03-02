@@ -34,6 +34,13 @@ export const MenuDerecha = ({ classes, textoUsuario, fotoUsuario }) => (
           primary="Elementos"
         />
       </ListItem>
+      <ListItem component={Link} button to="/prestamo/nuevo">
+        <i className="material-icons">business</i>
+        <ListItemText
+          classes={{ primary: classes.listItemText }}
+          primary="Préstamos"
+        />
+      </ListItem>
       <ListItem component={Link} button to="/laboratorios">
         <i className="material-icons">account_box</i>
         <ListItemText
@@ -62,7 +69,7 @@ export const MenuDerecha = ({ classes, textoUsuario, fotoUsuario }) => (
           primary="Mensajes"
         />
       </ListItem>
-      <ListItem component={Link} button to="/estudiante/update">
+      <ListItem component={Link} button to="/estudiantes">
         <i className="material-icons">account_box</i>
         <ListItemText
           classes={{ primary: classes.listItemText }}

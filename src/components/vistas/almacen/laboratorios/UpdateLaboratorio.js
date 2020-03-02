@@ -1,23 +1,29 @@
 import React, { useState, Fragment } from "react";
 import {
   Container,
-  Typography,
-  TextField,
   Paper,
+  Grid,
   Breadcrumbs,
   Link,
   IconButton,
   Collapse,
-  Grid,
+  Typography,
+  TextField,
   Button
 } from "@material-ui/core";
 import HomeIcon from "@material-ui/icons/Home";
-import { Alert, Autocomplete } from "@material-ui/lab";
+import { Alert } from "@material-ui/lab";
 import { Close as CloseIcon } from "@material-ui/icons";
+//import fotoUsuarioTemp from "../../../../logo.svg";
+//import ImageUploader from "react-images-upload";
+//import { v4 as uuidv4 } from "uuid";
 
 const style = {
+  container: {
+    paddingTop: "20px"
+  },
   paper: {
-    marginTop: 20,
+    marginTop: 8,
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -39,6 +45,9 @@ const style = {
     marginTop: 30,
     marginBottom: 20
   },
+  foto: {
+    height: "100px"
+  },
   avatar: {
     margin: 25,
     backgroundColor: "#e53935"
@@ -47,8 +56,7 @@ const style = {
     marginTop: 20
   }
 };
-
-const NuevoUsuario = props => {
+const UpdateLaboratorio = props => {
   //crear state de usuario
   const [perfil, cambiarPerfil] = useState({
     codigo: "",
@@ -104,16 +112,23 @@ const NuevoUsuario = props => {
 
   return (
     <Fragment>
-      <Container component="main" maxWidth="md" justify="center">
+      <Container
+        style={style.container}
+        component="main"
+        maxWidth="md"
+        justify="center"
+      >
         <Paper style={style.paper}>
-          <Grid container spacing={2} item xs={12} md={12}>
-            <Breadcrumbs aria-label="breadcrumb">
-              <Link color="inherit" style={style.link} href="/laboratorios">
-                <HomeIcon style={style.homeIcon} />
-                Laboratorios
-              </Link>
-              <Typography color="textPrimary">Agregar Laboratorio</Typography>
-            </Breadcrumbs>
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={12}>
+              <Breadcrumbs aria-label="breadcrumb">
+                <Link color="inherit" style={style.link} href="/laboratorios">
+                  <HomeIcon style={style.homeIcon} />
+                  Laboratorios
+                </Link>
+                <Typography color="textPrimary">Agregar Laboratorio</Typography>
+              </Breadcrumbs>
+            </Grid>
           </Grid>
 
           <Collapse in={error} style={style.error}>
@@ -176,32 +191,28 @@ const NuevoUsuario = props => {
               </Grid>
 
               <Grid item md={6} xs={6}>
-                <Autocomplete
-                  id="combo-box-demo"
+                <TextField
+                  name="registro"
+                  value={registro}
                   onChange={cambiarDato}
-                  getOptionLabel={option => option.clase}
-                  renderInput={params => (
-                    <TextField
-                      {...params}
-                      name="registro"
-                      label="Registrado por"
-                    />
-                  )}
+                  fullWidth
+                  label="Registrado Porregistro"
                 />
               </Grid>
-            </Grid>
-            <Grid container justify="center">
-              <Grid item xs={6} md={4}>
-                <Button
-                  type="submit"
-                  variant="contained"
-                  fullWidth
-                  size="medium"
-                  color="primary"
-                  style={style.submit}
-                >
-                  Guardar
-                </Button>
+
+              <Grid container justify="center">
+                <Grid item xs={6} md={4}>
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    fullWidth
+                    size="medium"
+                    color="primary"
+                    style={style.submit}
+                  >
+                    Guardar
+                  </Button>
+                </Grid>
               </Grid>
             </Grid>
           </form>
@@ -210,4 +221,4 @@ const NuevoUsuario = props => {
     </Fragment>
   );
 };
-export default NuevoUsuario;
+export default UpdateLaboratorio;

@@ -23,10 +23,10 @@ const style = {
     paddingTop: "40px"
   },
   container: {
-    paddingTop: "8px"
+    paddingTop: "20px"
   },
   paper: {
-    marginTop: 20,
+    marginTop: 8,
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -42,7 +42,7 @@ const style = {
     marginRight: "4px"
   },
   space: {
-    paddingTop: "10px"
+    paddingTop: "20px"
   }
 };
 
@@ -65,7 +65,12 @@ const rows = [
 
 function Usuarios() {
   return (
-    <Container component="main" maxWidth="md" justify="center">
+    <Container
+      style={style.container}
+      component="main"
+      maxWidth="md"
+      justify="center"
+    >
       <Paper style={style.paper}>
         <Grid container spacing={3}>
           <Grid item xs={12} md={12}>

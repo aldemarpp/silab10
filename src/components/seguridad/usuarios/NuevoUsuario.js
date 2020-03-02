@@ -1,15 +1,15 @@
 import React, { useState, Fragment } from "react";
 import {
   Container,
-  Typography,
-  TextField,
   Paper,
+  Grid,
   Breadcrumbs,
   Link,
   Avatar,
   IconButton,
   Collapse,
-  Grid,
+  Typography,
+  TextField,
   Button
 } from "@material-ui/core";
 import HomeIcon from "@material-ui/icons/Home";
@@ -20,8 +20,11 @@ import ImageUploader from "react-images-upload";
 import { v4 as uuidv4 } from "uuid";
 
 const style = {
+  container: {
+    paddingTop: "20px"
+  },
   paper: {
-    marginTop: 20,
+    marginTop: 8,
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -160,16 +163,23 @@ const NuevoUsuario = props => {
 
   return (
     <Fragment>
-      <Container component="main" maxWidth="md" justify="center">
+      <Container
+        style={style.container}
+        component="main"
+        maxWidth="md"
+        justify="center"
+      >
         <Paper style={style.paper}>
-          <Grid container spacing={2} item xs={12} md={12}>
-            <Breadcrumbs aria-label="breadcrumb">
-              <Link color="inherit" style={style.link} href="/usuarios">
-                <HomeIcon style={style.homeIcon} />
-                Usuarios
-              </Link>
-              <Typography color="textPrimary">Registrar Usuario</Typography>
-            </Breadcrumbs>
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={12}>
+              <Breadcrumbs aria-label="breadcrumb">
+                <Link color="inherit" style={style.link} href="/usuarios">
+                  <HomeIcon style={style.homeIcon} />
+                  Usuarios
+                </Link>
+                <Typography color="textPrimary">Registrar Usuario</Typography>
+              </Breadcrumbs>
+            </Grid>
           </Grid>
           <Avatar style={style.avatar} src={fotoUsuarioTemp}></Avatar>
 
@@ -275,30 +285,33 @@ const NuevoUsuario = props => {
                   onChange={cambiarDato}
                 />
               </Grid>
-              <Grid item md={12} xs={12}>
-                <ImageUploader
-                  withIcon={false}
-                  key={1000}
-                  singleImage={true}
-                  buttonText="Seleccione su imagen de perfil"
-                  onChange={subirFoto}
-                  imgExtension={[".jpg", ".gif", ".png", ".jpeg"]}
-                  maxFileSize={5242880}
-                />
+              <Grid container justify="center">
+                <Grid item md={6} xs={6}>
+                  <ImageUploader
+                    withIcon={false}
+                    key={1000}
+                    singleImage={true}
+                    buttonText="Seleccione su imagen de perfil"
+                    onChange={subirFoto}
+                    imgExtension={[".jpg", ".gif", ".png", ".jpeg"]}
+                    maxFileSize={5242880}
+                  />
+                </Grid>
               </Grid>
-            </Grid>
-            <Grid container justify="center">
-              <Grid item xs={6} md={4}>
-                <Button
-                  type="submit"
-                  variant="contained"
-                  fullWidth
-                  size="medium"
-                  color="primary"
-                  style={style.submit}
-                >
-                  Guardar
-                </Button>
+
+              <Grid container justify="center">
+                <Grid item xs={6} md={4}>
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    fullWidth
+                    size="medium"
+                    color="primary"
+                    style={style.submit}
+                  >
+                    Guardar
+                  </Button>
+                </Grid>
               </Grid>
             </Grid>
           </form>
