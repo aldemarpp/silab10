@@ -15,7 +15,7 @@ import {
 import HomeIcon from "@material-ui/icons/Home";
 import { Alert, Autocomplete } from "@material-ui/lab";
 import { Close as CloseIcon } from "@material-ui/icons";
-import fotoUsuarioTemp from "../../../logo.svg";
+import fotoUsuarioTemp from "../../../../logo.svg";
 import ImageUploader from "react-images-upload";
 import { v4 as uuidv4 } from "uuid";
 
@@ -55,14 +55,18 @@ const style = {
 const NuevoUsuario = props => {
   //crear state de usuario
   const [perfil, cambiarPerfil] = useState({
+    codigo: "",
     nombre: "",
     apellidos: "",
-    nickname: "",
+    programa: "",
+    dirección: "",
     email: "",
-    password: "",
-    tipo: "",
+    documento: "",
+    tipodoc: "",
     telefono: "",
-    registro: "",
+    estado: "",
+    sancion: "",
+    multa: "",
     foto: ""
   });
 
@@ -82,12 +86,14 @@ const NuevoUsuario = props => {
   const {
     nombre,
     apellidos,
-    nickname,
+    dirección,
     email,
-    password,
-    tipo,
+    documento,
+    tipodoc,
     telefono,
-    registro
+    estado,
+    sancion,
+    multa
   } = perfil;
 
   //funcion para cuando el usuario envia la informacion
@@ -96,12 +102,14 @@ const NuevoUsuario = props => {
     if (
       nombre === "" ||
       apellidos === "" ||
-      nickname === "" ||
+      dirección === "" ||
       email === "" ||
-      password === "" ||
-      tipo === "" ||
+      documento === "" ||
+      tipodoc === "" ||
       telefono === "" ||
-      registro === ""
+      estado === "" ||
+      sancion === "" ||
+      multa === ""
     ) {
       actualizarError(true);
       return;
@@ -116,12 +124,14 @@ const NuevoUsuario = props => {
     cambiarPerfil({
       nombre: "",
       apellidos: "",
-      nickname: "",
+      dirección: "",
       email: "",
-      password: "",
-      tipo: "",
+      documento: "",
+      tipodoc: "",
       telefono: "",
-      registro: ""
+      estado: "",
+      sancion: "",
+      multa: ""
     });
   };
 
@@ -130,6 +140,13 @@ const NuevoUsuario = props => {
     { clase: "Laboratorista" },
     { clase: "Beca-Trabajo" }
   ];
+  const programas = [
+    { clase: "Ingeniería Civil" },
+    { clase: "Ingeniería Mecánica" },
+    { clase: "Ingeniería de Sistemas" }
+  ];
+  const documentos = [{ clase: "CC" }, { clase: "TI" }];
+  const estados = [{ condicion: "Activo" }, { condicion: "Inactivo" }];
 
   const subirFoto = fotos => {
     //1. Capturar la imagen
@@ -164,11 +181,11 @@ const NuevoUsuario = props => {
         <Paper style={style.paper}>
           <Grid container spacing={2} item xs={12} md={12}>
             <Breadcrumbs aria-label="breadcrumb">
-              <Link color="inherit" style={style.link} href="/usuarios">
+              <Link color="inherit" style={style.link} href="/estudiantes">
                 <HomeIcon style={style.homeIcon} />
-                Usuarios
+                Estudiantes
               </Link>
-              <Typography color="textPrimary">Registrar Usuario</Typography>
+              <Typography color="textPrimary">Actualizar Estudiante</Typography>
             </Breadcrumbs>
           </Grid>
           <Avatar style={style.avatar} src={fotoUsuarioTemp}></Avatar>
@@ -196,6 +213,17 @@ const NuevoUsuario = props => {
           <form style={style.form} onSubmit={submitPerfil}>
             <Grid container spacing={2}>
               <Grid item md={6} xs={6}>
+                <Autocomplete
+                  id="combo-box-demo"
+                  disable
+                  onChange={cambiarDato}
+                  getOptionLabel={option => option.clase}
+                  renderInput={params => (
+                    <TextField {...params} name="codigo" label="Código" />
+                  )}
+                />
+              </Grid>
+              <Grid item md={6} xs={6}>
                 <TextField
                   name="nombre"
                   value={nombre}
@@ -214,12 +242,54 @@ const NuevoUsuario = props => {
                 />
               </Grid>
               <Grid item md={6} xs={6}>
+                <Autocomplete
+                  id="combo-box-demo"
+                  options={programas}
+                  onChange={cambiarDato}
+                  getOptionLabel={option => option.clase}
+                  renderInput={params => (
+                    <TextField
+                      {...params}
+                      name="programa"
+                      value={programas}
+                      label="Programa"
+                    />
+                  )}
+                />
+              </Grid>
+
+              <Grid item md={6} xs={6}>
+                <Autocomplete
+                  id="combo-box-demo"
+                  options={documentos}
+                  onChange={cambiarDato}
+                  getOptionLabel={option => option.clase}
+                  renderInput={params => (
+                    <TextField
+                      {...params}
+                      name="tipodoc"
+                      value={documentos}
+                      label="Tipo de Documento"
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item md={6} xs={6}>
                 <TextField
-                  name="nickname"
-                  value={nickname}
+                  name="documento"
+                  value={documento}
                   onChange={cambiarDato}
                   fullWidth
-                  label="Ingrese su Nickname"
+                  label="Ingrese su documento"
+                />
+              </Grid>
+              <Grid item md={6} xs={6}>
+                <TextField
+                  name="dirección"
+                  value={dirección}
+                  onChange={cambiarDato}
+                  fullWidth
+                  label="Ingrese su Dirección"
                 />
               </Grid>
               <Grid item md={6} xs={6}>
@@ -233,32 +303,6 @@ const NuevoUsuario = props => {
               </Grid>
               <Grid item md={6} xs={6}>
                 <TextField
-                  type="password"
-                  name="password"
-                  value={password}
-                  onChange={cambiarDato}
-                  fullWidth
-                  label="Ingrese su password"
-                />
-              </Grid>
-              <Grid item md={6} xs={6}>
-                <Autocomplete
-                  id="combo-box-demo"
-                  options={tipos}
-                  onChange={cambiarDato}
-                  getOptionLabel={option => option.clase}
-                  renderInput={params => (
-                    <TextField
-                      {...params}
-                      name="tipo"
-                      value={tipos}
-                      label="Tipo de Usuario"
-                    />
-                  )}
-                />
-              </Grid>
-              <Grid item md={6} xs={6}>
-                <TextField
                   name="telefono"
                   fullWidth
                   label="Teléfono"
@@ -267,12 +311,39 @@ const NuevoUsuario = props => {
                 />
               </Grid>
               <Grid item md={6} xs={6}>
-                <TextField
-                  name="registro"
-                  fullWidth
-                  label="Registrado por"
-                  value={registro}
+                <Autocomplete
+                  id="combo-box-demo"
+                  options={estados}
                   onChange={cambiarDato}
+                  getOptionLabel={option => option.condicion}
+                  renderInput={params => (
+                    <TextField
+                      {...params}
+                      name="estado"
+                      value={estados}
+                      label="Estado"
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item md={6} xs={6}>
+                <Autocomplete
+                  id="combo-box-demo"
+                  onChange={cambiarDato}
+                  getOptionLabel={option => option.condicion}
+                  renderInput={params => (
+                    <TextField {...params} name="sancion" label="Sanción" />
+                  )}
+                />
+              </Grid>
+              <Grid item md={6} xs={6}>
+                <Autocomplete
+                  id="combo-box-demo"
+                  onChange={cambiarDato}
+                  getOptionLabel={option => option.condicion}
+                  renderInput={params => (
+                    <TextField {...params} name="multa" label="Multa" />
+                  )}
                 />
               </Grid>
               <Grid item md={12} xs={12}>

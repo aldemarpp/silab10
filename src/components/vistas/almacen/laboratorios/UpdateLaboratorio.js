@@ -6,7 +6,6 @@ import {
   Paper,
   Breadcrumbs,
   Link,
-  Avatar,
   IconButton,
   Collapse,
   Grid,
@@ -15,9 +14,6 @@ import {
 import HomeIcon from "@material-ui/icons/Home";
 import { Alert, Autocomplete } from "@material-ui/lab";
 import { Close as CloseIcon } from "@material-ui/icons";
-import fotoUsuarioTemp from "../../../logo.svg";
-import ImageUploader from "react-images-upload";
-import { v4 as uuidv4 } from "uuid";
 
 const style = {
   paper: {
@@ -55,15 +51,11 @@ const style = {
 const NuevoUsuario = props => {
   //crear state de usuario
   const [perfil, cambiarPerfil] = useState({
+    codigo: "",
     nombre: "",
-    apellidos: "",
-    nickname: "",
-    email: "",
-    password: "",
-    tipo: "",
-    telefono: "",
+    ubicacion: "",
     registro: "",
-    foto: ""
+    observacion: ""
   });
 
   //crear state de error
@@ -79,29 +71,17 @@ const NuevoUsuario = props => {
   };
 
   //Extraer los valores de los inputs
-  const {
-    nombre,
-    apellidos,
-    nickname,
-    email,
-    password,
-    tipo,
-    telefono,
-    registro
-  } = perfil;
+  const { codigo, nombre, ubicacion, registro, observacion } = perfil;
 
   //funcion para cuando el usuario envia la informacion
   const submitPerfil = e => {
     e.preventDefault();
     if (
+      codigo === "" ||
       nombre === "" ||
-      apellidos === "" ||
-      nickname === "" ||
-      email === "" ||
-      password === "" ||
-      tipo === "" ||
-      telefono === "" ||
-      registro === ""
+      ubicacion === "" ||
+      registro === "" ||
+      observacion === ""
     ) {
       actualizarError(true);
       return;
@@ -114,48 +94,12 @@ const NuevoUsuario = props => {
 
     //Reiniciar el form
     cambiarPerfil({
+      codigo: "",
       nombre: "",
-      apellidos: "",
-      nickname: "",
-      email: "",
-      password: "",
-      tipo: "",
-      telefono: "",
-      registro: ""
+      ubicacion: "",
+      registro: "",
+      observacion: ""
     });
-  };
-
-  const tipos = [
-    { clase: "Administrador" },
-    { clase: "Laboratorista" },
-    { clase: "Beca-Trabajo" }
-  ];
-
-  const subirFoto = fotos => {
-    //1. Capturar la imagen
-    const foto = fotos[0];
-    //2. Generar codigo para la imagen
-    const claveUnicaFoto = uuidv4();
-    //3. Obtener el nombre de la foto
-    const nombreFoto = foto.name;
-    //4. Obtener la extencion de la imagen
-    const extensionFoto = nombreFoto.split(".").pop();
-    //5. Crear el nuevo nombre para la imagen
-    //5.1 divide el nombre de la foto donde encuentra un punto y toma la primera parte => Imagen 1.png = 'image'+'png'
-    //5.2 agrega un _ despues de la primera parte =>'imagen 1_'
-    //5.3 agrega la clave unica => 'Imagen 1_51223678'
-    //5.4 agrega la extencion => 'Imagen 1_51223678.png'
-    //5.5 reemplaza el espacio con _ => 'Imagen_1_51223678.png'
-    //5.6 cambia el nombre a minuscula => 'imagen_1_51223678.png'
-    const alias = (
-      nombreFoto.split(".")[0] +
-      "_" +
-      claveUnicaFoto +
-      "." +
-      extensionFoto
-    ).replace(/\s/g, "_").toLowerCase;
-
-    console.log(alias);
   };
 
   return (
@@ -164,14 +108,13 @@ const NuevoUsuario = props => {
         <Paper style={style.paper}>
           <Grid container spacing={2} item xs={12} md={12}>
             <Breadcrumbs aria-label="breadcrumb">
-              <Link color="inherit" style={style.link} href="/usuarios">
+              <Link color="inherit" style={style.link} href="/laboratorios">
                 <HomeIcon style={style.homeIcon} />
-                Usuarios
+                Laboratorios
               </Link>
-              <Typography color="textPrimary">Registrar Usuario</Typography>
+              <Typography color="textPrimary">Agregar Laboratorio</Typography>
             </Breadcrumbs>
           </Grid>
-          <Avatar style={style.avatar} src={fotoUsuarioTemp}></Avatar>
 
           <Collapse in={error} style={style.error}>
             <Alert
@@ -197,93 +140,53 @@ const NuevoUsuario = props => {
             <Grid container spacing={2}>
               <Grid item md={6} xs={6}>
                 <TextField
+                  name="codigo"
+                  value={codigo}
+                  onChange={cambiarDato}
+                  fullWidth
+                  label="Código"
+                />
+              </Grid>
+              <Grid item md={6} xs={6}>
+                <TextField
                   name="nombre"
                   value={nombre}
                   onChange={cambiarDato}
                   fullWidth
-                  label="Ingrese su nombre"
+                  label="Nombre"
                 />
               </Grid>
               <Grid item md={6} xs={6}>
                 <TextField
-                  name="apellidos"
-                  value={apellidos}
+                  name="ubicacion"
+                  value={ubicacion}
                   onChange={cambiarDato}
                   fullWidth
-                  label="Ingrese sus apellidos"
+                  label="Ubicación"
                 />
               </Grid>
               <Grid item md={6} xs={6}>
                 <TextField
-                  name="nickname"
-                  value={nickname}
+                  name="observacion"
+                  value={observacion}
                   onChange={cambiarDato}
                   fullWidth
-                  label="Ingrese su Nickname"
+                  label="Observaciones"
                 />
               </Grid>
-              <Grid item md={6} xs={6}>
-                <TextField
-                  name="email"
-                  value={email}
-                  onChange={cambiarDato}
-                  fullWidth
-                  label="Ingrese su e-mail"
-                />
-              </Grid>
-              <Grid item md={6} xs={6}>
-                <TextField
-                  type="password"
-                  name="password"
-                  value={password}
-                  onChange={cambiarDato}
-                  fullWidth
-                  label="Ingrese su password"
-                />
-              </Grid>
+
               <Grid item md={6} xs={6}>
                 <Autocomplete
                   id="combo-box-demo"
-                  options={tipos}
                   onChange={cambiarDato}
                   getOptionLabel={option => option.clase}
                   renderInput={params => (
                     <TextField
                       {...params}
-                      name="tipo"
-                      value={tipos}
-                      label="Tipo de Usuario"
+                      name="registro"
+                      label="Registrado por"
                     />
                   )}
-                />
-              </Grid>
-              <Grid item md={6} xs={6}>
-                <TextField
-                  name="telefono"
-                  fullWidth
-                  label="Teléfono"
-                  value={telefono}
-                  onChange={cambiarDato}
-                />
-              </Grid>
-              <Grid item md={6} xs={6}>
-                <TextField
-                  name="registro"
-                  fullWidth
-                  label="Registrado por"
-                  value={registro}
-                  onChange={cambiarDato}
-                />
-              </Grid>
-              <Grid item md={12} xs={12}>
-                <ImageUploader
-                  withIcon={false}
-                  key={1000}
-                  singleImage={true}
-                  buttonText="Seleccione su imagen de perfil"
-                  onChange={subirFoto}
-                  imgExtension={[".jpg", ".gif", ".png", ".jpeg"]}
-                  maxFileSize={5242880}
                 />
               </Grid>
             </Grid>

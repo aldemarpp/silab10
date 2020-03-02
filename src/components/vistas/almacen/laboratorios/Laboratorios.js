@@ -12,9 +12,7 @@ import {
   Grid,
   Breadcrumbs,
   Link,
-  Typography,
-  TextField,
-  Button
+  Typography
 } from "@material-ui/core";
 
 import HomeIcon from "@material-ui/icons/Home";
@@ -28,7 +26,7 @@ const style = {
     paddingTop: "8px"
   },
   paper: {
-    marginTop: 8,
+    marginTop: 20,
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -44,7 +42,7 @@ const style = {
     marginRight: "4px"
   },
   space: {
-    paddingTop: "20px"
+    paddingTop: "10px"
   }
 };
 
@@ -65,24 +63,23 @@ const rows = [
   createData("Gingerbread", 356, 16.0, 49, 3.9)
 ];
 
-function Trabajos() {
+function Usuarios() {
   return (
-    <Container
-      style={style.container}
-      component="main"
-      maxWidth="md"
-      justify="center"
-    >
+    <Container component="main" maxWidth="md" justify="center">
       <Paper style={style.paper}>
         <Grid container spacing={3}>
-          <Grid item xs={12} md={10}>
+          <Grid item xs={12} md={12}>
             <Breadcrumbs aria-label="breadcrumb">
               <Link color="inherit" style={style.link} href="">
                 <HomeIcon style={style.homeIcon} />
-                Trabajos
+                Laboratorios
               </Link>
-              <Link color="inherit" style={style.link} href="/trabajo/nuevo">
-                <Typography color="textPrimary">Nuevo Trabajo</Typography>
+              <Link
+                color="inherit"
+                style={style.link}
+                href="/laboratorio/update"
+              >
+                <Typography color="textPrimary">Nuevo Laboratorio</Typography>
               </Link>
             </Breadcrumbs>
           </Grid>
@@ -92,12 +89,9 @@ function Trabajos() {
           <Table style={style.table} aria-label="customized table">
             <TableHead>
               <TableRow>
-                <TableCell align="center">Id</TableCell>
-                <TableCell align="center">Asignatura - Carrera</TableCell>
-                <TableCell align="center">Descripción</TableCell>
-                <TableCell align="center">Registardo por</TableCell>
-                <TableCell align="center">Entrada</TableCell>
-                <TableCell align="center">Salida</TableCell>
+                <TableCell align="center">Laboratorio</TableCell>
+                <TableCell align="center">Ubicación</TableCell>
+                <TableCell align="center">Observaciones</TableCell>
                 <TableCell align="center">Opciones</TableCell>
               </TableRow>
             </TableHead>
@@ -110,8 +104,6 @@ function Trabajos() {
                   <TableCell align="center">{row.calories}</TableCell>
                   <TableCell align="center">{row.fat}</TableCell>
                   <TableCell align="center">{row.carbs}</TableCell>
-                  <TableCell align="center">{row.Activo}</TableCell>
-                  <TableCell align="center">{row.Activo}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -122,4 +114,4 @@ function Trabajos() {
   );
 }
 
-export default Trabajos;
+export default Usuarios;

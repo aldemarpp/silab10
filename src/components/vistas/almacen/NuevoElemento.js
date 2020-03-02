@@ -142,7 +142,7 @@ class NuevoElemento extends Component {
     let imagenKey = uuid.v4();
 
     return (
-      <Container style={style.container}>
+      <Container style={style.container} component="main" maxWidth="md" justify="center">
         <Paper style={style.paper}>
           <Grid container spacing={3}>
             <Grid item xs={12} md={10}>

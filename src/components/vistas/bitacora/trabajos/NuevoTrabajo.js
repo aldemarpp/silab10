@@ -22,7 +22,9 @@ const style = {
     padding: "20px",
     backgroundColor: "#f5f5f5"
   },
-
+  container: {
+    paddingTop: "8px"
+  },
   link: {
     display: "flex"
   },
@@ -98,7 +100,12 @@ const NuevoTrabajo = () => {
   ];
 
   return (
-    <Container style={style.container}>
+    <Container
+      style={style.container}
+      component="main"
+      maxWidth="md"
+      justify="center"
+    >
       <Paper style={style.paper}>
         {error ? (
           <p style={style.error}>¡Todos los campos son obligatorios!</p>

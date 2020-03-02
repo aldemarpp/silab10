@@ -12,9 +12,7 @@ import {
   Grid,
   Breadcrumbs,
   Link,
-  Typography,
-  TextField,
-  Button
+  Typography
 } from "@material-ui/core";
 
 import HomeIcon from "@material-ui/icons/Home";
@@ -28,7 +26,7 @@ const style = {
     paddingTop: "8px"
   },
   paper: {
-    marginTop: 8,
+    marginTop: 20,
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -44,7 +42,7 @@ const style = {
     marginRight: "4px"
   },
   space: {
-    paddingTop: "20px"
+    paddingTop: "10px"
   }
 };
 
@@ -67,10 +65,10 @@ const rows = [
 
 function Usuarios() {
   return (
-    <Container style={style.container}>
+    <Container component="main" maxWidth="md" justify="center">
       <Paper style={style.paper}>
         <Grid container spacing={3}>
-          <Grid item xs={12} md={10}>
+          <Grid item xs={12} md={12}>
             <Breadcrumbs aria-label="breadcrumb">
               <Link color="inherit" style={style.link} href="">
                 <HomeIcon style={style.homeIcon} />

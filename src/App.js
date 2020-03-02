@@ -6,8 +6,13 @@ import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import theme from "./theme/theme";
 import Grid from "@material-ui/core/Grid";
 import Usuarios from "./components/seguridad/usuarios/Usuarios";
+import Estudiantes from "./components/seguridad/personas/estudiantes/Estudiantes";
+import UpdateEstudiante from "./components/seguridad/personas/estudiantes/UpdateEstudiante";
+import Laboratorios from "./components/vistas/almacen/laboratorios/Laboratorios";
+import UpdateLaboratorio from "./components/vistas/almacen/laboratorios/UpdateLaboratorio";
 import NuevoUsuario from "./components/seguridad/usuarios/NuevoUsuario";
 import RegistrarUsuario from "./components/seguridad/usuarios/RegistrarUsuario";
+import PerfilUsuario from "./components/seguridad/usuarios/PerfilUsuario";
 import Login from "./components/seguridad/Login";
 import NuevoElemento from "./components/vistas/almacen/NuevoElemento";
 import EditarElemento from "./components/vistas/almacen/EditarElemento";
@@ -39,13 +44,21 @@ function App(props) {
               component={EditarElemento}
             ></Route>
             <Route path="/auth/login" exact component={Login}></Route>
-            <Route
-              path="/auth/perfil"
-              exact
-              component={RegistrarUsuario}
-            ></Route>
+            <Route path="/auth/perfil" exact component={PerfilUsuario}></Route>
             <Route path="/usuarios" exact component={Usuarios}></Route>
             <Route path="/usuario/nuevo" exact component={NuevoUsuario}></Route>
+            <Route path="/estudiantes" exact component={Estudiantes}></Route>
+            <Route
+              path="/estudiante/update"
+              exact
+              component={UpdateEstudiante}
+            ></Route>
+            <Route path="/laboratorios" exact component={Laboratorios}></Route>
+            <Route
+              path="/laboratorio/update"
+              exact
+              component={UpdateLaboratorio}
+            ></Route>
             <Route
               path="/mantenimientos"
               exact
