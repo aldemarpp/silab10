@@ -1,5 +1,4 @@
-import React from "react";
-//import { makeStyles } from "@material-ui/core/styles";
+import React, { Component } from "react";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -46,80 +45,99 @@ const style = {
   }
 };
 
-function createData(name, calories, fat, carbs, Activo) {
-  return { name, calories, fat, carbs, Activo };
+function createData(id, imagen, stock, horas, categoria, estado) {
+  return { id, imagen, stock, horas, categoria, estado };
 }
 
 const rows = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9)
+  createData("Pedro", 60, 24, 20, 30, 20, 30),
+  createData("Armando", 237, 9.0, 37, 4.3, 20, 30),
+  createData("Pedro2", 237, 9.0, 37, 4.3, 20, 30),
+  createData("Aldemar", 237, 9.0, 37, 4.3, 20, 30)
 ];
 
-function Elementos() {
-  return (
-    <Container
-      style={style.container}
-      component="main"
-      maxWidth="md"
-      justify="center"
-    >
-      <Paper style={style.paper}>
-        <Grid container spacing={3}>
-          <Grid item xs={12} md={12}>
-            <Breadcrumbs aria-label="breadcrumb">
-              <Link color="inherit" style={style.link} href="">
-                <HomeIcon style={style.homeIcon} />
-                Elementos
-              </Link>
-              <Link color="inherit" style={style.link} href="/elemento/nuevo">
-                <Typography color="textPrimary">Nuevo Elemento</Typography>
-              </Link>
-            </Breadcrumbs>
-          </Grid>
-        </Grid>
-
-        <TableContainer component={Paper} style={style.space}>
-          <Table style={style.table} aria-label="customized table">
-            <TableHead>
-              <TableRow>
-                <TableCell align="center">Id</TableCell>
-                <TableCell align="center">Elemento</TableCell>
-                <TableCell align="center">Imagen</TableCell>
-                <TableCell align="center">Stock</TableCell>
-                <TableCell align="center">Horas de Uso</TableCell>
-                <TableCell align="center">Categoría</TableCell>
-                <TableCell align="center">Estado</TableCell>
-                <TableCell align="center">Opciones</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {rows.map(row => (
-                <TableRow key={row.name}>
-                  <TableCell component="th" scope="row">
-                    {row.name}
-                  </TableCell>
-                  <TableCell align="center">{row.calories}</TableCell>
-                  <TableCell align="center">{row.fat}</TableCell>
-                  <TableCell align="center">{row.carbs}</TableCell>
-                  <TableCell align="center">{row.Activo}</TableCell>
-                  <TableCell align="center">{row.Activo}</TableCell>
-                  <TableCell align="center">{row.Activo}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Paper>
-    </Container>
-  );
+function searchingFor(term) {
+  return function(x) {
+    return x.id.toLowerCase().includes(term.toLowerCase()) || !term;
+  };
 }
 
-export default Elementos;
+export default class Elementos extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      rows: rows,
+      term: ""
+    };
+    this.searchHandler = this.searchHandler.bind(this);
+  }
+  searchHandler(event) {
+    this.setState({ term: event.target.value });
+  }
+
+  render() {
+    const { term, rows } = this.state;
+
+    return (
+      <Container
+        style={style.container}
+        component="main"
+        maxWidth="md"
+        justify="center"
+      >
+        <Paper style={style.paper}>
+          <Grid container spacing={3}>
+            <Grid item xs={12} md={12}>
+              <Breadcrumbs aria-label="breadcrumb">
+                <Link color="inherit" style={style.link} href="">
+                  <HomeIcon style={style.homeIcon} />
+                  Elementos
+                </Link>
+                <Link color="inherit" style={style.link} href="/elemento/nuevo">
+                  <Typography color="textPrimary">Nuevo Elemento</Typography>
+                </Link>
+              </Breadcrumbs>
+            </Grid>
+          </Grid>
+
+          <div className="App">
+            <form>
+              <input
+                type="text"
+                onChange={this.searchHandler}
+                value={term}
+              ></input>
+            </form>
+            <TableContainer component={Paper} style={style.space}>
+              <Table style={style.table} aria-label="customized table">
+                <TableHead>
+                  <TableRow>
+                    <TableCell align="center">Elemento</TableCell>
+                    <TableCell align="center">Imagen</TableCell>
+                    <TableCell align="center">Stock</TableCell>
+                    <TableCell align="center">Horas de Uso</TableCell>
+                    <TableCell align="center">Categoría</TableCell>
+                    <TableCell align="center">Estado</TableCell>
+                    <TableCell align="center">Opciones</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {rows.filter(searchingFor(term)).map(person => (
+                    <TableRow key={person.id}>
+                      <TableCell align="center">{person.id}</TableCell>
+                      <TableCell align="center">{person.imagen}</TableCell>
+                      <TableCell align="center">{person.stock}</TableCell>
+                      <TableCell align="center">{person.horas}</TableCell>
+                      <TableCell align="center">{person.categoria}</TableCell>
+                      <TableCell align="center">{person.estado}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </div>
+        </Paper>
+      </Container>
+    );
+  }
+}

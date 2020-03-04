@@ -3,6 +3,7 @@ import AppBar from "@material-ui/core/AppBar";
 import { withStyles } from "@material-ui/styles";
 import { compose } from "recompose";
 import BarSession from "./bar/BarSession";
+//import AutoCompleteText from "../../AutoCompleteText";
 
 const styles = theme => ({
   sectionDesktop: {

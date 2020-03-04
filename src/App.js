@@ -24,12 +24,25 @@ import Trabajos from "./components/vistas/bitacora/trabajos/Trabajos";
 import NuevoTrabajo from "./components/vistas/bitacora/trabajos/NuevoTrabajo";
 import EditarTrabajo from "./components/vistas/bitacora/trabajos/EditarTrabajo";
 import NuevoPrestamo from "./components/vistas/bitacora/prestamos/NuevoPrestamo";
+import countries from "./countries";
+import AutoCompleteText from "./AutoCompleteText";
+import Search from "../src/Search";
+import "../src/Search/style.css";
 
 function App(props) {
   return (
     <Router>
       <MuiThemeProvider theme={theme}>
         <AppNavBar />
+
+        <div className="App">
+          <Search />
+          <div className="App-Component">
+            <div className="App-Component">
+              <AutoCompleteText items={countries} />
+            </div>
+          </div>
+        </div>
 
         <Grid container>
           <Switch>
