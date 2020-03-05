@@ -5,15 +5,20 @@ import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
+//import "../../../Search/style.css";
+
 import {
   Container,
   Paper,
   Grid,
   Breadcrumbs,
   Link,
-  Typography
+  Typography,
+  IconButton,
+  Divider
 } from "@material-ui/core";
-
+import Icon from "@mdi/react";
+import { mdiEye, mdiImage, mdiCheckboxMarkedCircle } from "@mdi/js";
 import HomeIcon from "@material-ui/icons/Home";
 
 const style = {
@@ -42,18 +47,23 @@ const style = {
   },
   space: {
     paddingTop: "20px"
+  },
+  divider: {
+    marginBottom: 20
   }
 };
 
-function createData(id, imagen, stock, horas, categoria, estado) {
-  return { id, imagen, stock, horas, categoria, estado };
+function createData(id, stock, horas_uso, categoria, estado) {
+  return { id, stock, horas_uso, categoria, estado };
 }
 
 const rows = [
-  createData("Pedro", 60, 24, 20, 30, 20, 30),
-  createData("Armando", 237, 9.0, 37, 4.3, 20, 30),
-  createData("Pedro2", 237, 9.0, 37, 4.3, 20, 30),
-  createData("Aldemar", 237, 9.0, 37, 4.3, 20, 30)
+  createData("23546 - Arduino Nano", "12", "20", "A", "Activo"),
+  createData("35484 - Arduino Mega", "10", "5", "A", "Activo"),
+  createData("56842 - Tester Hx12", "7", "45", "B", "Activo"),
+  createData("74325 - Alineador estatio", "13", "100", "C", "Activo"),
+  createData("29886 - Teodolito", "20", "200", "C", "Activo"),
+  createData("12325 - Osciloscopio", "4", "150", "C", "Activo")
 ];
 
 function searchingFor(term) {
@@ -82,11 +92,11 @@ export default class Elementos extends Component {
       <Container
         style={style.container}
         component="main"
-        maxWidth="md"
+        maxWidth="lg"
         justify="center"
       >
         <Paper style={style.paper}>
-          <Grid container spacing={3}>
+          <Grid container spacing={2}>
             <Grid item xs={12} md={12}>
               <Breadcrumbs aria-label="breadcrumb">
                 <Link color="inherit" style={style.link} href="">
@@ -98,6 +108,9 @@ export default class Elementos extends Component {
                 </Link>
               </Breadcrumbs>
             </Grid>
+            <Grid item md={12} xs={12}>
+              <Divider style={style.divider} />
+            </Grid>
           </Grid>
 
           <div className="App">
@@ -108,34 +121,51 @@ export default class Elementos extends Component {
                 value={term}
               ></input>
             </form>
-            <TableContainer component={Paper} style={style.space}>
-              <Table style={style.table} aria-label="customized table">
-                <TableHead>
-                  <TableRow>
-                    <TableCell align="center">Elemento</TableCell>
-                    <TableCell align="center">Imagen</TableCell>
-                    <TableCell align="center">Stock</TableCell>
-                    <TableCell align="center">Horas de Uso</TableCell>
-                    <TableCell align="center">Categoría</TableCell>
-                    <TableCell align="center">Estado</TableCell>
-                    <TableCell align="center">Opciones</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {rows.filter(searchingFor(term)).map(person => (
-                    <TableRow key={person.id}>
-                      <TableCell align="center">{person.id}</TableCell>
-                      <TableCell align="center">{person.imagen}</TableCell>
-                      <TableCell align="center">{person.stock}</TableCell>
-                      <TableCell align="center">{person.horas}</TableCell>
-                      <TableCell align="center">{person.categoria}</TableCell>
-                      <TableCell align="center">{person.estado}</TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
           </div>
+
+          <TableContainer component={Paper} style={style.space}>
+            <Table style={style.table} aria-label="customized table">
+              <TableHead>
+                <TableRow>
+                  <TableCell align="center">Elemento</TableCell>
+                  <TableCell align="center">Imagen</TableCell>
+                  <TableCell align="center">Stock</TableCell>
+                  <TableCell align="center">Horas de Uso</TableCell>
+                  <TableCell align="center">Categoría</TableCell>
+                  <TableCell align="center">Estado</TableCell>
+                  <TableCell align="center">Opciones</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {rows.filter(searchingFor(term)).map(person => (
+                  <TableRow key={person.id}>
+                    <TableCell component="th" scope="row" align="left">
+                      {person.id}
+                    </TableCell>
+                    <TableCell align="center">
+                      <Icon path={mdiImage} size={1} color="red" />
+                    </TableCell>
+                    <TableCell align="center">{person.stock}</TableCell>
+                    <TableCell align="center">{person.horas_uso}</TableCell>
+                    <TableCell align="center">{person.categoria}</TableCell>
+                    <TableCell align="center">{person.estado}</TableCell>
+                    <TableCell align="center">
+                      <IconButton>
+                        <Icon path={mdiEye} size={1} color="red" />
+                      </IconButton>
+                      <IconButton>
+                        <Icon
+                          path={mdiCheckboxMarkedCircle}
+                          size={1}
+                          color="red"
+                        />
+                      </IconButton>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
         </Paper>
       </Container>
     );

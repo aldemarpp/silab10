@@ -35,15 +35,6 @@ function App(props) {
       <MuiThemeProvider theme={theme}>
         <AppNavBar />
 
-        <div className="App">
-          <Search />
-          <div className="App-Component">
-            <div className="App-Component">
-              <AutoCompleteText items={countries} />
-            </div>
-          </div>
-        </div>
-
         <Grid container>
           <Switch>
             <Route path="/elementos" exact component={Elementos}></Route>

@@ -1,3 +1,8 @@
+.md-form .prefix {
+  left: 0;
+  top: 12px;
+}
+
 .App {
   font-family: sans-serif;
   text-align: center;

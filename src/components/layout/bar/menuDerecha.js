@@ -6,6 +6,19 @@ import {
   Avatar,
   Divider
 } from "@material-ui/core";
+import Icon from "@mdi/react";
+import {
+  mdiTestTube,
+  mdiAccountBox,
+  mdiBookSearch,
+  mdiFlask,
+  mdiTools,
+  mdiBriefcase,
+  mdiMessageBulleted,
+  mdiAccountGroup,
+  mdiAccountKey,
+  mdiAccountArrowLeft
+} from "@mdi/js";
 import { Link } from "react-router-dom";
 
 export const MenuDerecha = ({ classes, textoUsuario, fotoUsuario }) => (
@@ -20,7 +33,7 @@ export const MenuDerecha = ({ classes, textoUsuario, fotoUsuario }) => (
       </ListItem>
       <Divider />
       <ListItem component={Link} button to="/auth/perfil">
-        <i className="material-icons">account_box</i>
+        <Icon path={mdiAccountBox} size={1} color="red" />
         <ListItemText
           classes={{ primary: classes.listItemText }}
           primary="Perfil"
@@ -28,56 +41,56 @@ export const MenuDerecha = ({ classes, textoUsuario, fotoUsuario }) => (
       </ListItem>
       <Divider />
       <ListItem component={Link} button to="/elementos">
-        <i className="material-icons">business</i>
+        <Icon path={mdiTestTube} size={1} color="red" />
         <ListItemText
           classes={{ primary: classes.listItemText }}
           primary="Elementos"
         />
       </ListItem>
       <ListItem component={Link} button to="/prestamo/nuevo">
-        <i className="material-icons">business</i>
+        <Icon path={mdiBookSearch} size={1} color="red" />
         <ListItemText
           classes={{ primary: classes.listItemText }}
           primary="Préstamos"
         />
       </ListItem>
       <ListItem component={Link} button to="/laboratorios">
-        <i className="material-icons">account_box</i>
+        <Icon path={mdiFlask} size={1} color="red" />
         <ListItemText
           classes={{ primary: classes.listItemText }}
           primary="Laboratorios"
         />
       </ListItem>
       <ListItem component={Link} button to="/mantenimientos">
-        <i className="material-icons">add_box</i>
+        <Icon path={mdiTools} size={1} color="red" />
         <ListItemText
           classes={{ primary: classes.listItemText }}
           primary="Mantenimientos"
         />
       </ListItem>
       <ListItem component={Link} button to="/trabajos">
-        <i className="material-icons">add_box</i>
+        <Icon path={mdiBriefcase} size={1} color="red" />
         <ListItemText
           classes={{ primary: classes.listItemText }}
           primary="Trabajos"
         />
       </ListItem>
       <ListItem component={Link} button to="/">
-        <i className="material-icons">mail_outline</i>
+        <Icon path={mdiMessageBulleted} size={1} color="red" />
         <ListItemText
           classes={{ primary: classes.listItemText }}
           primary="Mensajes"
         />
       </ListItem>
       <ListItem component={Link} button to="/estudiantes">
-        <i className="material-icons">account_box</i>
+        <Icon path={mdiAccountGroup} size={1} color="red" />
         <ListItemText
           classes={{ primary: classes.listItemText }}
           primary="Estudiantes"
         />
       </ListItem>
       <ListItem component={Link} button to="/usuarios">
-        <i className="material-icons">account_box</i>
+        <Icon path={mdiAccountKey} size={1} color="red" />
         <ListItemText
           classes={{ primary: classes.listItemText }}
           primary="Usuarios"
@@ -85,7 +98,7 @@ export const MenuDerecha = ({ classes, textoUsuario, fotoUsuario }) => (
       </ListItem>
       <Divider />
       <ListItem component={Link} button to="Cerrar Sesión">
-        <i className="material-icons">account_box</i>
+        <Icon path={mdiAccountArrowLeft} size={1} color="red" />
         <ListItemText
           classes={{ primary: classes.listItemText }}
           primary="Cerrar Sesión"
