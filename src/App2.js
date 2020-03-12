@@ -2,33 +2,32 @@ import React from "react";
 import "./App.css";
 import AppNavBar from "./components/layout/AppNavbar";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { MuiThemeProvider } from "@material-ui/core/styles";
+import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import theme from "./theme/theme";
 import Grid from "@material-ui/core/Grid";
-import PerfilUsuario from "./components/seguridad/usuarios/PerfilUsuario";
 import Usuarios from "./components/seguridad/usuarios/Usuarios";
-import NuevoUsuario from "./components/seguridad/usuarios/NuevoUsuario";
 import Estudiantes from "./components/seguridad/personas/estudiantes/Estudiantes";
 import UpdateEstudiante from "./components/seguridad/personas/estudiantes/UpdateEstudiante";
 import Laboratorios from "./components/vistas/almacen/laboratorios/Laboratorios";
 import UpdateLaboratorio from "./components/vistas/almacen/laboratorios/UpdateLaboratorio";
+import NuevoUsuario from "./components/seguridad/usuarios/NuevoUsuario";
 //import RegistrarUsuario from "./components/seguridad/usuarios/RegistrarUsuario";
+import PerfilUsuario from "./components/seguridad/usuarios/PerfilUsuario";
 import Login from "./components/seguridad/Login";
-import NuevoElemento from "./components/vistas/almacen/elementos/NuevoElemento";
-import EditarElemento from "./components/vistas/almacen/elementos/EditarElemento";
-import Elementos from "./components/vistas/almacen/elementos/Elementos";
+import NuevoElemento from "./components/vistas/almacen/NuevoElemento";
+import EditarElemento from "./components/vistas/almacen/EditarElemento";
+import Elementos from "./components/vistas/almacen/Elementos";
 import Mantenimientos from "./components/vistas/bitacora/mantenimientos/Mantenimientos";
 import NuevoMantenimiento from "./components/vistas/bitacora/mantenimientos/NuevoMantenimiento";
-//import EditarMantenimiento from "./components/vistas/bitacora/mantenimientos/EditarMantenimiento";
+import EditarMantenimiento from "./components/vistas/bitacora/mantenimientos/EditarMantenimiento";
 import Trabajos from "./components/vistas/bitacora/trabajos/Trabajos";
 import NuevoTrabajo from "./components/vistas/bitacora/trabajos/NuevoTrabajo";
-//import EditarTrabajo from "./components/vistas/bitacora/trabajos/EditarTrabajo";
+import EditarTrabajo from "./components/vistas/bitacora/trabajos/EditarTrabajo";
 import Prestamos from "./components/vistas/bitacora/prestamos/Prestamos";
-import Prestamo from "./components/vistas/bitacora/prestamos/Prestamo";
-//import NuevoPrestamo from "./components/vistas/bitacora/prestamos/NuevoPrestamo";
-//import countries from "./countries";
-//import AutoCompleteText from "./AutoCompleteText";
-//import Search from "../src/Search";
+import NuevoPrestamo from "./components/vistas/bitacora/prestamos/NuevoPrestamo";
+import countries from "./countries";
+import AutoCompleteText from "./AutoCompleteText";
+import Search from "../src/Search";
 //import "../src/Search/style.css";
 
 function App(props) {
@@ -51,8 +50,7 @@ function App(props) {
               component={EditarElemento}
             ></Route>
 
-            <Route path="/prestamos" exact component={Prestamos}></Route>
-            <Route path="/prestamo/nuevo" exact component={Prestamo}></Route>
+            <Route path="/prestamo/nuevo" exact component={NuevoPrestamo} />
             <Route path="/auth/login" exact component={Login}></Route>
             <Route path="/auth/perfil" exact component={PerfilUsuario}></Route>
             <Route path="/usuarios" exact component={Usuarios}></Route>
@@ -79,9 +77,18 @@ function App(props) {
               exact
               component={NuevoMantenimiento}
             ></Route>
-
+            <Route
+              path="/mantenimiento/editar"
+              exact
+              component={EditarMantenimiento}
+            ></Route>
             <Route path="/trabajos" exact component={Trabajos}></Route>
             <Route path="/trabajo/nuevo" exact component={NuevoTrabajo}></Route>
+            <Route
+              path="/trabajo/editar"
+              exact
+              component={EditarTrabajo}
+            ></Route>
           </Switch>
         </Grid>
       </MuiThemeProvider>

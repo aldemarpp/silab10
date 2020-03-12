@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 //import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -6,8 +6,6 @@ import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import Icon from "@mdi/react";
-import { mdiEye, mdiCircleEditOutline } from "@mdi/js";
 import {
   Container,
   Paper,
@@ -15,9 +13,13 @@ import {
   Breadcrumbs,
   Link,
   Typography,
+  TextField,
+  IconButton,
   Divider,
-  IconButton
+  InputAdornment
 } from "@material-ui/core";
+import Icon from "@mdi/react";
+import { mdiEye, mdiCircleEditOutline, mdiCardSearch } from "@mdi/js";
 import HomeIcon from "@material-ui/icons/Home";
 
 const style = {
@@ -48,8 +50,11 @@ const style = {
     paddingTop: "20px"
   },
   divider: {
-    marginBottom: 20,
-    marginTop: -10
+    marginBottom: 20
+  },
+  search: {
+    width: 400,
+    marginBottom: 20
   }
 };
 
@@ -104,7 +109,7 @@ const rows = [
     "1012784125",
     "lmontesm@ufpso.edu.co",
     "3156123252",
-    "Activo"
+    "Desactivado"
   ),
   createData(
     "191158 - Aldemar Peñaranda",
@@ -132,78 +137,129 @@ const rows = [
   )
 ];
 
-function Estudiantes() {
-  return (
-    <Container
-      style={style.container}
-      component="main"
-      maxWidth="lg"
-      justify="center"
-    >
-      <Paper style={style.paper}>
-        <Grid container spacing={3}>
-          <Grid item xs={12} md={12}>
-            <Breadcrumbs aria-label="breadcrumb">
-              <Link color="inherit" style={style.link} href="">
-                <HomeIcon style={style.homeIcon} />
-                Estudiantes
-              </Link>
-              <Link
-                color="inherit"
-                style={style.link}
-                href="/estudiante/update"
-              >
-                <Typography color="textPrimary">
-                  Actualizar Estudiante
-                </Typography>
-              </Link>
-            </Breadcrumbs>
-          </Grid>
-          <Grid item md={12} xs={12}>
-            <Divider style={style.divider} />
-          </Grid>
-        </Grid>
-
-        <TableContainer component={Paper} style={style.space}>
-          <Table style={style.table} aria-label="customized table">
-            <TableHead>
-              <TableRow>
-                <TableCell align="center">Estudiante</TableCell>
-                <TableCell align="center">Programa</TableCell>
-                <TableCell align="center">Documento</TableCell>
-                <TableCell align="center">Email</TableCell>
-                <TableCell align="center">Teléfono</TableCell>
-                <TableCell align="center">Estado</TableCell>
-                <TableCell align="center">Opciones</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {rows.map(row => (
-                <TableRow key={row.name}>
-                  <TableCell component="th" scope="row">
-                    {row.estudiante}
-                  </TableCell>
-                  <TableCell align="center">{row.programa}</TableCell>
-                  <TableCell align="center">{row.documento}</TableCell>
-                  <TableCell align="center">{row.email}</TableCell>
-                  <TableCell align="center">{row.telefono}</TableCell>
-                  <TableCell align="center">{row.estado}</TableCell>
-                  <TableCell>
-                    <IconButton>
-                      <Icon path={mdiEye} size={1} color="red" />
-                    </IconButton>
-                    <IconButton>
-                      <Icon path={mdiCircleEditOutline} size={1} color="red" />
-                    </IconButton>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Paper>
-    </Container>
-  );
+function searchingFor(term) {
+  return function(x) {
+    return (
+      x.estudiante.toLowerCase().includes(term.toLowerCase()) ||
+      x.programa.toLowerCase().includes(term.toLowerCase()) ||
+      x.documento.toLowerCase().includes(term.toLowerCase()) ||
+      x.email.toLowerCase().includes(term.toLowerCase()) ||
+      x.telefono.toLowerCase().includes(term.toLowerCase()) ||
+      x.estado.toLowerCase().includes(term.toLowerCase()) ||
+      !term
+    );
+  };
 }
 
-export default Estudiantes;
+export default class Estudiantes extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      rows: rows,
+      term: ""
+    };
+    this.searchHandler = this.searchHandler.bind(this);
+  }
+  searchHandler(event) {
+    this.setState({ term: event.target.value });
+  }
+
+  render() {
+    const { term, rows } = this.state;
+
+    return (
+      <Container
+        style={style.container}
+        component="main"
+        maxWidth="lg"
+        justify="center"
+      >
+        <Paper style={style.paper}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={12}>
+              <Breadcrumbs aria-label="breadcrumb">
+                <Link color="inherit" style={style.link} href="">
+                  <HomeIcon style={style.homeIcon} />
+                  Estudiantes
+                </Link>
+                <Link
+                  color="inherit"
+                  style={style.link}
+                  href="/estudiante/update"
+                >
+                  <Typography color="textPrimary">
+                    Actualizar Estudiante
+                  </Typography>
+                </Link>
+              </Breadcrumbs>
+            </Grid>
+            <Grid item md={12} xs={12}>
+              <Divider style={style.divider} />
+            </Grid>
+          </Grid>
+
+          <div className="App">
+            <form>
+              <TextField
+                fullWidth
+                placeholder="Buscar..."
+                onChange={this.searchHandler}
+                value={term}
+                style={style.search}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <Icon path={mdiCardSearch} size={1.5} color="red" />
+                    </InputAdornment>
+                  )
+                }}
+              />
+            </form>
+          </div>
+
+          <TableContainer component={Paper} style={style.space}>
+            <Table style={style.table} aria-label="customized table">
+              <TableHead>
+                <TableRow>
+                  <TableCell align="center">Estudiante</TableCell>
+                  <TableCell align="center">Programa</TableCell>
+                  <TableCell align="center">Documento</TableCell>
+                  <TableCell align="center">Email</TableCell>
+                  <TableCell align="center">Teléfono</TableCell>
+                  <TableCell align="center">Estado</TableCell>
+                  <TableCell align="center">Opciones</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {rows.filter(searchingFor(term)).map(person => (
+                  <TableRow key={person.estudiante}>
+                    <TableCell component="th" scope="row" align="left">
+                      {person.estudiante}
+                    </TableCell>
+                    <TableCell align="center">{person.programa}</TableCell>
+                    <TableCell align="center">{person.documento}</TableCell>
+                    <TableCell align="center">{person.email}</TableCell>
+                    <TableCell align="center">{person.telefono}</TableCell>
+                    <TableCell align="center">{person.estado}</TableCell>
+                    <TableCell align="center">
+                      <IconButton>
+                        <Icon path={mdiEye} size={1} color="red" />
+                      </IconButton>
+                      <IconButton>
+                        <Icon
+                          path={mdiCircleEditOutline}
+                          size={1}
+                          color="red"
+                        />
+                      </IconButton>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Paper>
+      </Container>
+    );
+  }
+}

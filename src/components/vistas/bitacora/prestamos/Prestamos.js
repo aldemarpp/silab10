@@ -5,20 +5,21 @@ import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-//import "../../../Search/style.css";
 
 import {
   Container,
   Paper,
   Grid,
+  TextField,
   Breadcrumbs,
   Link,
   Typography,
   IconButton,
-  Divider
+  Divider,
+  InputAdornment
 } from "@material-ui/core";
 import Icon from "@mdi/react";
-import { mdiEye, mdiImage, mdiCheckboxMarkedCircle } from "@mdi/js";
+import { mdiEye, mdiCardSearch } from "@mdi/js";
 import HomeIcon from "@material-ui/icons/Home";
 
 const style = {
@@ -50,6 +51,10 @@ const style = {
   },
   divider: {
     marginBottom: 20
+  },
+  search: {
+    width: 400,
+    marginBottom: 20
   }
 };
 
@@ -68,11 +73,18 @@ const rows = [
 
 function searchingFor(term) {
   return function(x) {
-    return x.id.toLowerCase().includes(term.toLowerCase()) || !term;
+    return (
+      x.id.toLowerCase().includes(term.toLowerCase()) ||
+      x.stock.toLowerCase().includes(term.toLowerCase()) ||
+      x.horas_uso.toLowerCase().includes(term.toLowerCase()) ||
+      x.categoria.toLowerCase().includes(term.toLowerCase()) ||
+      x.estado.toLowerCase().includes(term.toLowerCase()) ||
+      !term
+    );
   };
 }
 
-export default class Elementos extends Component {
+export default class Prestamos extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -101,10 +113,10 @@ export default class Elementos extends Component {
               <Breadcrumbs aria-label="breadcrumb">
                 <Link color="inherit" style={style.link} href="">
                   <HomeIcon style={style.homeIcon} />
-                  Elementos
+                  Préstamos
                 </Link>
-                <Link color="inherit" style={style.link} href="/elemento/nuevo">
-                  <Typography color="textPrimary">Nuevo Elemento</Typography>
+                <Link color="inherit" style={style.link} href="/prestamo/nuevo">
+                  <Typography color="textPrimary">Nuevo Préstamo</Typography>
                 </Link>
               </Breadcrumbs>
             </Grid>
@@ -115,11 +127,20 @@ export default class Elementos extends Component {
 
           <div className="App">
             <form>
-              <input
-                type="text"
+              <TextField
+                fullWidth
+                placeholder="Buscar..."
                 onChange={this.searchHandler}
                 value={term}
-              ></input>
+                style={style.search}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <Icon path={mdiCardSearch} size={1.5} color="red" />
+                    </InputAdornment>
+                  )
+                }}
+              />
             </form>
           </div>
 
@@ -127,12 +148,12 @@ export default class Elementos extends Component {
             <Table style={style.table} aria-label="customized table">
               <TableHead>
                 <TableRow>
-                  <TableCell align="center">Elemento</TableCell>
-                  <TableCell align="center">Imagen</TableCell>
-                  <TableCell align="center">Stock</TableCell>
-                  <TableCell align="center">Horas de Uso</TableCell>
-                  <TableCell align="center">Categoría</TableCell>
+                  <TableCell align="center">Estudiante</TableCell>
+                  <TableCell align="center">Asignatura-Programa</TableCell>
+                  <TableCell align="center">Registrado Por</TableCell>
                   <TableCell align="center">Estado</TableCell>
+                  <TableCell align="center">Solicitud</TableCell>
+                  <TableCell align="center">N° de Préstamos</TableCell>
                   <TableCell align="center">Opciones</TableCell>
                 </TableRow>
               </TableHead>
@@ -142,23 +163,14 @@ export default class Elementos extends Component {
                     <TableCell component="th" scope="row" align="left">
                       {person.id}
                     </TableCell>
-                    <TableCell align="center">
-                      <Icon path={mdiImage} size={1} color="red" />
-                    </TableCell>
                     <TableCell align="center">{person.stock}</TableCell>
                     <TableCell align="center">{person.horas_uso}</TableCell>
-                    <TableCell align="center">{person.categoria}</TableCell>
                     <TableCell align="center">{person.estado}</TableCell>
+                    <TableCell align="center">{person.categoria}</TableCell>
+                    <TableCell align="center">{person.stock}</TableCell>
                     <TableCell align="center">
                       <IconButton>
                         <Icon path={mdiEye} size={1} color="red" />
-                      </IconButton>
-                      <IconButton>
-                        <Icon
-                          path={mdiCheckboxMarkedCircle}
-                          size={1}
-                          color="red"
-                        />
                       </IconButton>
                     </TableCell>
                   </TableRow>

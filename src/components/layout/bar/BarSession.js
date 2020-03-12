@@ -9,6 +9,7 @@ import {
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import { compose } from "recompose";
+//import { MenuDerecha } from "./menuDerecha";
 import { MenuDerecha } from "./menuDerecha";
 //import { MenuIzquierda } from "./menuIzquierda";
 import { Link } from "react-router-dom";

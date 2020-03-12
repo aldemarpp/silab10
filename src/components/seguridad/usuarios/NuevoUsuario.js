@@ -46,6 +46,9 @@ const style = {
     marginTop: 30,
     marginBottom: 20
   },
+  foto: {
+    height: "100px"
+  },
   avatar: {
     margin: 25,
     backgroundColor: "#e53935"
@@ -58,6 +61,7 @@ const style = {
 const NuevoUsuario = props => {
   //crear state de usuario
   const [perfil, cambiarPerfil] = useState({
+    codigo: "",
     nombre: "",
     apellidos: "",
     nickname: "",
@@ -83,6 +87,7 @@ const NuevoUsuario = props => {
 
   //Extraer los valores de los inputs
   const {
+    codigo,
     nombre,
     apellidos,
     nickname,
@@ -97,6 +102,7 @@ const NuevoUsuario = props => {
   const submitPerfil = e => {
     e.preventDefault();
     if (
+      codigo === "" ||
       nombre === "" ||
       apellidos === "" ||
       nickname === "" ||
@@ -117,6 +123,7 @@ const NuevoUsuario = props => {
 
     //Reiniciar el form
     cambiarPerfil({
+      codigo: "",
       nombre: "",
       apellidos: "",
       nickname: "",
@@ -133,6 +140,7 @@ const NuevoUsuario = props => {
     { clase: "Laboratorista" },
     { clase: "Beca-Trabajo" }
   ];
+  const estadoele = [{ state: "Activo" }, { state: "Inactivo" }];
 
   const subirFoto = fotos => {
     //1. Capturar la imagen
@@ -166,7 +174,7 @@ const NuevoUsuario = props => {
       <Container
         style={style.container}
         component="main"
-        maxWidth="md"
+        maxWidth="lg"
         justify="center"
       >
         <Paper style={style.paper}>
@@ -207,11 +215,20 @@ const NuevoUsuario = props => {
             <Grid container spacing={2}>
               <Grid item md={6} xs={6}>
                 <TextField
+                  name="codigo"
+                  value={codigo}
+                  onChange={cambiarDato}
+                  fullWidth
+                  label="Ingrese su Código"
+                />
+              </Grid>
+              <Grid item md={6} xs={6}>
+                <TextField
                   name="nombre"
                   value={nombre}
                   onChange={cambiarDato}
                   fullWidth
-                  label="Ingrese su nombre"
+                  label="Ingrese su Nombre"
                 />
               </Grid>
               <Grid item md={6} xs={6}>
@@ -264,6 +281,16 @@ const NuevoUsuario = props => {
                       value={tipos}
                       label="Tipo de Usuario"
                     />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={6} md={6}>
+                <Autocomplete
+                  id="combo-box-demo"
+                  options={estadoele}
+                  getOptionLabel={option => option.state}
+                  renderInput={params => (
+                    <TextField {...params} label="Seleccione un estado" />
                   )}
                 />
               </Grid>

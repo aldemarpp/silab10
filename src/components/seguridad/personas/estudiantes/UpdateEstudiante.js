@@ -153,7 +153,7 @@ const UpdateEstudiante = props => {
       <Container
         style={style.container}
         component="main"
-        maxWidth="md"
+        maxWidth="lg"
         justify="center"
       >
         <Paper style={style.paper}>

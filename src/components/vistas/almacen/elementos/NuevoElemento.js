@@ -15,7 +15,7 @@ import {
 import HomeIcon from "@material-ui/icons/Home";
 import { Alert, Autocomplete } from "@material-ui/lab";
 import { Close as CloseIcon } from "@material-ui/icons";
-import fotoUsuarioTemp from "../../../logo.svg";
+import fotoUsuarioTemp from "../../../../logo.svg";
 import ImageUploader from "react-images-upload";
 import { v4 as uuidv4 } from "uuid";
 
@@ -136,18 +136,11 @@ const NuevoElemento = props => {
   };
 
   const estadoele = [{ state: "Activo" }, { state: "Inactivo" }];
-  const detalles = [{ category: "A" }, { category: "B" }, { category: "C" }];
-  const detalles1 = [
-    { time: "2 Horas" },
-    { time: "4 Horas" },
-    { time: "1 Día" }
+  const detalles = [
+    { category: "A", time: "2 Horas", sancions: "1 Semana", mult: "$1000" },
+    { category: "B", time: "4 Horas", sancions: "1 Mes", mult: "$2000" },
+    { category: "C", time: "1 Día", sancions: "1 Semestre", mult: "$5000" }
   ];
-  const detalles2 = [
-    { sancions: "1 Semana" },
-    { sancions: "1 Mes" },
-    { sancions: "1 Semestre" }
-  ];
-  const detalles3 = [{ mult: "$1000" }, { mult: "$2000" }, { mult: "$5000" }];
 
   const subirFoto = fotos => {
     //1. Capturar la imagen
@@ -242,7 +235,7 @@ const NuevoElemento = props => {
 
               <Grid item xs={6} md={4}>
                 <TextField
-                  name="horas de uso"
+                  name="horas_uso"
                   label="Horas de uso"
                   fullWidth
                   value={horas_uso}
@@ -267,14 +260,14 @@ const NuevoElemento = props => {
                   options={detalles}
                   getOptionLabel={option => option.category}
                   renderInput={params => (
-                    <TextField {...params} label="Seleccione una categoria" />
+                    <TextField {...params} label="Seleccione categoria" />
                   )}
                 />
               </Grid>
               <Grid item xs={6} md={4}>
                 <Autocomplete
                   id="combo-box-demo"
-                  options={detalles1}
+                  options={detalles}
                   getOptionLabel={option => option.time}
                   renderInput={params => (
                     <TextField {...params} label="Seleccione el tiempo" />
@@ -284,7 +277,7 @@ const NuevoElemento = props => {
               <Grid item xs={6} md={4}>
                 <Autocomplete
                   id="combo-box-demo"
-                  options={detalles2}
+                  options={detalles}
                   getOptionLabel={option => option.sancions}
                   renderInput={params => (
                     <TextField {...params} label="Seleccione la sanción" />
@@ -294,7 +287,7 @@ const NuevoElemento = props => {
               <Grid item xs={6} md={4}>
                 <Autocomplete
                   id="combo-box-demo"
-                  options={detalles3}
+                  options={detalles}
                   getOptionLabel={option => option.mult}
                   renderInput={params => (
                     <TextField {...params} label="Seleccione la multa" />
@@ -303,7 +296,7 @@ const NuevoElemento = props => {
               </Grid>
 
               <Grid container justify="center">
-                <Grid item xs={6} sm={6}>
+                <Grid item xs={12} sm={6}>
                   <ImageUploader
                     withIcon={false}
                     key={1000}
@@ -316,7 +309,7 @@ const NuevoElemento = props => {
                 </Grid>
               </Grid>
               <Grid container justify="center">
-                <Grid item xs={6} md={4}>
+                <Grid item xs={3} md={4}>
                   <Button
                     type="submit"
                     variant="contained"

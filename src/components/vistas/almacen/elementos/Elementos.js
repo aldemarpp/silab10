@@ -1,11 +1,12 @@
 import React, { Component } from "react";
-//import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
+//import "../../../Search/style.css";
+
 import {
   Container,
   Paper,
@@ -19,7 +20,12 @@ import {
   TextField
 } from "@material-ui/core";
 import Icon from "@mdi/react";
-import { mdiEye, mdiCardSearch } from "@mdi/js";
+import {
+  mdiEye,
+  mdiImage,
+  mdiCheckboxMarkedCircle,
+  mdiCardSearch
+} from "@mdi/js";
 import HomeIcon from "@material-ui/icons/Home";
 
 const style = {
@@ -70,6 +76,7 @@ const rows = [
   createData("29886 - Teodolito", "20", "200", "C", "Activo"),
   createData("12325 - Osciloscopio", "4", "150", "C", "Activo")
 ];
+
 function searchingFor(term) {
   return function(x) {
     return (
@@ -83,7 +90,7 @@ function searchingFor(term) {
   };
 }
 
-export default class Laboratorios extends Component {
+export default class Elementos extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -112,14 +119,10 @@ export default class Laboratorios extends Component {
               <Breadcrumbs aria-label="breadcrumb">
                 <Link color="inherit" style={style.link} href="">
                   <HomeIcon style={style.homeIcon} />
-                  Laboratorios
+                  Elementos
                 </Link>
-                <Link
-                  color="inherit"
-                  style={style.link}
-                  href="/laboratorio/update"
-                >
-                  <Typography color="textPrimary">Nuevo Laboratorio</Typography>
+                <Link color="inherit" style={style.link} href="/elemento/nuevo">
+                  <Typography color="textPrimary">Nuevo Elemento</Typography>
                 </Link>
               </Breadcrumbs>
             </Grid>
@@ -151,9 +154,12 @@ export default class Laboratorios extends Component {
             <Table style={style.table} aria-label="customized table">
               <TableHead>
                 <TableRow>
-                  <TableCell align="center">Laboratorio</TableCell>
-                  <TableCell align="center">Ubicación</TableCell>
-                  <TableCell align="center">Observaciones</TableCell>
+                  <TableCell align="center">Elemento</TableCell>
+                  <TableCell align="center">Imagen</TableCell>
+                  <TableCell align="center">Stock</TableCell>
+                  <TableCell align="center">Horas de Uso</TableCell>
+                  <TableCell align="center">Categoría</TableCell>
+                  <TableCell align="center">Estado</TableCell>
                   <TableCell align="center">Opciones</TableCell>
                 </TableRow>
               </TableHead>
@@ -163,11 +169,23 @@ export default class Laboratorios extends Component {
                     <TableCell component="th" scope="row" align="left">
                       {person.id}
                     </TableCell>
+                    <TableCell align="center">
+                      <Icon path={mdiImage} size={1} color="red" />
+                    </TableCell>
                     <TableCell align="center">{person.stock}</TableCell>
+                    <TableCell align="center">{person.horas_uso}</TableCell>
+                    <TableCell align="center">{person.categoria}</TableCell>
                     <TableCell align="center">{person.estado}</TableCell>
                     <TableCell align="center">
                       <IconButton>
                         <Icon path={mdiEye} size={1} color="red" />
+                      </IconButton>
+                      <IconButton>
+                        <Icon
+                          path={mdiCheckboxMarkedCircle}
+                          size={1}
+                          color="red"
+                        />
                       </IconButton>
                     </TableCell>
                   </TableRow>
