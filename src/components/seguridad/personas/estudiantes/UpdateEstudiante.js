@@ -53,7 +53,8 @@ const style = {
     backgroundColor: "#e53935"
   },
   error: {
-    marginTop: 20
+    marginTop: 20,
+    marginBottom: 20
   }
 };
 
@@ -64,10 +65,10 @@ const UpdateEstudiante = props => {
     nombre: "",
     apellidos: "",
     programa: "",
+    tipodoc: "",
+    documento: "",
     dirección: "",
     email: "",
-    documento: "",
-    tipodoc: "",
     telefono: "",
     estado: "",
     sancion: "",
@@ -89,12 +90,14 @@ const UpdateEstudiante = props => {
 
   //Extraer los valores de los inputs
   const {
+    codigo,
     nombre,
     apellidos,
+    programa,
+    tipodoc,
+    documento,
     dirección,
     email,
-    documento,
-    tipodoc,
     telefono,
     estado,
     sancion,
@@ -105,12 +108,14 @@ const UpdateEstudiante = props => {
   const submitPerfil = e => {
     e.preventDefault();
     if (
+      codigo === "" ||
       nombre === "" ||
       apellidos === "" ||
+      programa === "" ||
+      tipodoc === "" ||
+      documento === "" ||
       dirección === "" ||
       email === "" ||
-      documento === "" ||
-      tipodoc === "" ||
       telefono === "" ||
       estado === "" ||
       sancion === "" ||
@@ -127,12 +132,14 @@ const UpdateEstudiante = props => {
 
     //Reiniciar el form
     cambiarPerfil({
+      codigo: "",
       nombre: "",
       apellidos: "",
+      programa: "",
+      tipodoc: "",
+      documento: "",
       dirección: "",
       email: "",
-      documento: "",
-      tipodoc: "",
       telefono: "",
       estado: "",
       sancion: "",
@@ -141,12 +148,22 @@ const UpdateEstudiante = props => {
   };
 
   const programas = [
-    { clase: "Ingeniería Civil" },
-    { clase: "Ingeniería Mecánica" },
-    { clase: "Ingeniería de Sistemas" }
+    { state: "Ingeniería Civil" },
+    { state: "Ingeniería Mecánica" },
+    { state: "Ingeniería de Sistemas" }
   ];
-  const documentos = [{ clase: "CC" }, { clase: "TI" }];
-  const estados = [{ condicion: "Activo" }, { condicion: "Inactivo" }];
+  const documentos = [{ state: "CC" }, { state: "TI" }];
+  const estados = [{ state: "Activo" }, { state: "Inactivo" }];
+  const detalles = [
+    { state: "1 Semana" },
+    { state: "1 Mes" },
+    { state: "1 Semestre" }
+  ];
+  const detalles1 = [
+    { state: "$1000" },
+    { state: "$2000" },
+    { state: "$5000" }
+  ];
 
   return (
     <Fragment>
@@ -194,14 +211,12 @@ const UpdateEstudiante = props => {
           <form style={style.form} onSubmit={submitPerfil}>
             <Grid container spacing={2}>
               <Grid item md={6} xs={6}>
-                <Autocomplete
-                  id="combo-box-demo"
-                  disable
+                <TextField
+                  name="codigo"
+                  value={codigo}
                   onChange={cambiarDato}
-                  getOptionLabel={option => option.clase}
-                  renderInput={params => (
-                    <TextField {...params} name="codigo" label="Código" />
-                  )}
+                  fullWidth
+                  label="Código"
                 />
               </Grid>
               <Grid item md={6} xs={6}>
@@ -225,16 +240,17 @@ const UpdateEstudiante = props => {
               <Grid item md={6} xs={6}>
                 <Autocomplete
                   id="combo-box-demo"
+                  name="programa"
                   options={programas}
-                  onChange={cambiarDato}
-                  getOptionLabel={option => option.clase}
+                  onChange={(event, value) => {
+                    cambiarPerfil(prev => ({
+                      ...prev,
+                      programa: value.state
+                    }));
+                  }}
+                  getOptionLabel={option => option.state}
                   renderInput={params => (
-                    <TextField
-                      {...params}
-                      name="programa"
-                      value={programas}
-                      label="Programa"
-                    />
+                    <TextField {...params} label="Programa" />
                   )}
                 />
               </Grid>
@@ -242,16 +258,17 @@ const UpdateEstudiante = props => {
               <Grid item md={6} xs={6}>
                 <Autocomplete
                   id="combo-box-demo"
+                  name="tipodoc"
                   options={documentos}
-                  onChange={cambiarDato}
-                  getOptionLabel={option => option.clase}
+                  onChange={(event, value) => {
+                    cambiarPerfil(prev => ({
+                      ...prev,
+                      tipodoc: value.state
+                    }));
+                  }}
+                  getOptionLabel={option => option.state}
                   renderInput={params => (
-                    <TextField
-                      {...params}
-                      name="tipodoc"
-                      value={documentos}
-                      label="Tipo de Documento"
-                    />
+                    <TextField {...params} label="Tipo de Documento" />
                   )}
                 />
               </Grid>
@@ -294,36 +311,51 @@ const UpdateEstudiante = props => {
               <Grid item md={6} xs={6}>
                 <Autocomplete
                   id="combo-box-demo"
+                  name="estado"
                   options={estados}
-                  onChange={cambiarDato}
-                  getOptionLabel={option => option.condicion}
+                  onChange={(event, value) => {
+                    cambiarPerfil(prev => ({
+                      ...prev,
+                      estado: value.state
+                    }));
+                  }}
+                  getOptionLabel={option => option.state}
                   renderInput={params => (
-                    <TextField
-                      {...params}
-                      name="estado"
-                      value={estados}
-                      label="Estado"
-                    />
+                    <TextField {...params} label="Estado" />
                   )}
                 />
               </Grid>
               <Grid item md={6} xs={6}>
                 <Autocomplete
                   id="combo-box-demo"
-                  onChange={cambiarDato}
-                  getOptionLabel={option => option.condicion}
+                  name="sancion"
+                  options={detalles}
+                  onChange={(event, value) => {
+                    cambiarPerfil(prev => ({
+                      ...prev,
+                      sancion: value.state
+                    }));
+                  }}
+                  getOptionLabel={option => option.state}
                   renderInput={params => (
-                    <TextField {...params} name="sancion" label="Sanción" />
+                    <TextField {...params} label="Sanción" />
                   )}
                 />
               </Grid>
               <Grid item md={6} xs={6}>
                 <Autocomplete
                   id="combo-box-demo"
-                  onChange={cambiarDato}
-                  getOptionLabel={option => option.condicion}
+                  name="multa"
+                  options={detalles1}
+                  onChange={(event, value) => {
+                    cambiarPerfil(prev => ({
+                      ...prev,
+                      multa: value.state
+                    }));
+                  }}
+                  getOptionLabel={option => option.state}
                   renderInput={params => (
-                    <TextField {...params} name="multa" label="Multa" />
+                    <TextField {...params} label="Multa" />
                   )}
                 />
               </Grid>

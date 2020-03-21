@@ -58,8 +58,8 @@ const style = {
   }
 };
 
-function createData(id, stock, horas_uso, categoria, estado) {
-  return { id, stock, horas_uso, categoria, estado };
+function createData(estudiante, stock, horas_uso, categoria, estado) {
+  return { estudiante, stock, horas_uso, categoria, estado };
 }
 
 const rows = [
@@ -74,7 +74,7 @@ const rows = [
 function searchingFor(term) {
   return function(x) {
     return (
-      x.id.toLowerCase().includes(term.toLowerCase()) ||
+      x.estudiante.toLowerCase().includes(term.toLowerCase()) ||
       x.stock.toLowerCase().includes(term.toLowerCase()) ||
       x.horas_uso.toLowerCase().includes(term.toLowerCase()) ||
       x.categoria.toLowerCase().includes(term.toLowerCase()) ||
@@ -158,9 +158,9 @@ export default class Prestamos extends Component {
               </TableHead>
               <TableBody>
                 {rows.filter(searchingFor(term)).map(person => (
-                  <TableRow key={person.id}>
+                  <TableRow key={person.estudiante}>
                     <TableCell component="th" scope="row" align="left">
-                      {person.id}
+                      {person.estudiante}
                     </TableCell>
                     <TableCell align="center">{person.stock}</TableCell>
                     <TableCell align="center">{person.horas_uso}</TableCell>

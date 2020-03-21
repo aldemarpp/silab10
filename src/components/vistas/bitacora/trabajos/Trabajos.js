@@ -19,7 +19,12 @@ import {
   InputAdornment
 } from "@material-ui/core";
 import Icon from "@mdi/react";
-import { mdiEye, mdiCircleEditOutline, mdiCardSearch } from "@mdi/js";
+import {
+  mdiEye,
+  mdiCircleEditOutline,
+  mdiCheckboxMarkedCircle,
+  mdiCardSearch
+} from "@mdi/js";
 import HomeIcon from "@material-ui/icons/Home";
 
 const style = {
@@ -58,8 +63,8 @@ const style = {
   }
 };
 
-function createData(id, stock, horas_uso, categoria, estado) {
-  return { id, stock, horas_uso, categoria, estado };
+function createData(estudiante, stock, horas_uso, categoria, estado) {
+  return { estudiante, stock, horas_uso, categoria, estado };
 }
 
 const rows = [
@@ -74,7 +79,7 @@ const rows = [
 function searchingFor(term) {
   return function(x) {
     return (
-      x.id.toLowerCase().includes(term.toLowerCase()) ||
+      x.estudiante.toLowerCase().includes(term.toLowerCase()) ||
       x.stock.toLowerCase().includes(term.toLowerCase()) ||
       x.horas_uso.toLowerCase().includes(term.toLowerCase()) ||
       x.categoria.toLowerCase().includes(term.toLowerCase()) ||
@@ -148,7 +153,7 @@ export default class Trabajos extends Component {
             <Table style={style.table} aria-label="customized table">
               <TableHead>
                 <TableRow>
-                  <TableCell align="center">Id</TableCell>
+                  <TableCell align="center">Estudiante</TableCell>
                   <TableCell align="center">Asignatura - Carrera</TableCell>
                   <TableCell align="center">Descripción</TableCell>
                   <TableCell align="center">Registardo por</TableCell>
@@ -159,9 +164,9 @@ export default class Trabajos extends Component {
               </TableHead>
               <TableBody>
                 {rows.filter(searchingFor(term)).map(person => (
-                  <TableRow key={person.id}>
+                  <TableRow key={person.estudiante}>
                     <TableCell component="th" scope="row" align="left">
-                      {person.id}
+                      {person.estudiante}
                     </TableCell>
                     <TableCell align="center">{person.stock}</TableCell>
                     <TableCell align="center">{person.horas_uso}</TableCell>
@@ -175,6 +180,13 @@ export default class Trabajos extends Component {
                       <IconButton>
                         <Icon
                           path={mdiCircleEditOutline}
+                          size={1}
+                          color="red"
+                        />
+                      </IconButton>
+                      <IconButton>
+                        <Icon
+                          path={mdiCheckboxMarkedCircle}
                           size={1}
                           color="red"
                         />

@@ -54,7 +54,8 @@ const style = {
     backgroundColor: "#e53935"
   },
   error: {
-    marginTop: 20
+    marginTop: 20,
+    marginBottom: 20
   }
 };
 
@@ -136,10 +137,21 @@ const NuevoElemento = props => {
   };
 
   const estadoele = [{ state: "Activo" }, { state: "Inactivo" }];
-  const detalles = [
-    { category: "A", time: "2 Horas", sancions: "1 Semana", mult: "$1000" },
-    { category: "B", time: "4 Horas", sancions: "1 Mes", mult: "$2000" },
-    { category: "C", time: "1 Día", sancions: "1 Semestre", mult: "$5000" }
+  const detalles = [{ state: "A" }, { state: "B" }, { state: "C" }];
+  const detalles1 = [
+    { state: "2 Horas" },
+    { state: "4 Horas" },
+    { state: "1 Semana" }
+  ];
+  const detalles2 = [
+    { state: "$1000" },
+    { state: "$2000" },
+    { state: "$5000" }
+  ];
+  const detalles3 = [
+    { state: "1 Día" },
+    { state: "1 Mes" },
+    { state: "1 Semestre" }
   ];
 
   const subirFoto = fotos => {
@@ -215,6 +227,15 @@ const NuevoElemento = props => {
             <Grid container spacing={2}>
               <Grid item xs={6} md={4}>
                 <TextField
+                  name="codigo"
+                  label="Código del elemento"
+                  fullWidth
+                  value={codigo}
+                  onChange={cambiarDato}
+                />
+              </Grid>
+              <Grid item xs={6} md={4}>
+                <TextField
                   name="nombre"
                   label="Nombre del elemento"
                   fullWidth
@@ -222,7 +243,6 @@ const NuevoElemento = props => {
                   onChange={cambiarDato}
                 />
               </Grid>
-
               <Grid item xs={6} md={4}>
                 <TextField
                   name="stock"
@@ -246,10 +266,21 @@ const NuevoElemento = props => {
               <Grid item xs={6} md={4}>
                 <Autocomplete
                   id="combo-box-demo"
+                  name="estado"
                   options={estadoele}
+                  onChange={(event, value) => {
+                    cambiarPerfil(prev => ({
+                      ...prev,
+                      estado: value.state
+                    }));
+                  }}
                   getOptionLabel={option => option.state}
                   renderInput={params => (
-                    <TextField {...params} label="Seleccione un estado" />
+                    <TextField
+                      {...params}
+                      name="estado"
+                      label="Seleccione un estado"
+                    />
                   )}
                 />
               </Grid>
@@ -257,8 +288,15 @@ const NuevoElemento = props => {
               <Grid item xs={6} md={4}>
                 <Autocomplete
                   id="combo-box-demo"
+                  name="categoria"
                   options={detalles}
-                  getOptionLabel={option => option.category}
+                  onChange={(event, value) => {
+                    cambiarPerfil(prev => ({
+                      ...prev,
+                      categoria: value.state
+                    }));
+                  }}
+                  getOptionLabel={option => option.state}
                   renderInput={params => (
                     <TextField {...params} label="Seleccione categoria" />
                   )}
@@ -267,8 +305,15 @@ const NuevoElemento = props => {
               <Grid item xs={6} md={4}>
                 <Autocomplete
                   id="combo-box-demo"
-                  options={detalles}
-                  getOptionLabel={option => option.time}
+                  name="tiempo_prestamo"
+                  options={detalles1}
+                  onChange={(event, value) => {
+                    cambiarPerfil(prev => ({
+                      ...prev,
+                      tiempo_prestamo: value.state
+                    }));
+                  }}
+                  getOptionLabel={option => option.state}
                   renderInput={params => (
                     <TextField {...params} label="Seleccione el tiempo" />
                   )}
@@ -277,8 +322,15 @@ const NuevoElemento = props => {
               <Grid item xs={6} md={4}>
                 <Autocomplete
                   id="combo-box-demo"
-                  options={detalles}
-                  getOptionLabel={option => option.sancions}
+                  name="sancion"
+                  options={detalles2}
+                  onChange={(event, value) => {
+                    cambiarPerfil(prev => ({
+                      ...prev,
+                      sancion: value.state
+                    }));
+                  }}
+                  getOptionLabel={option => option.state}
                   renderInput={params => (
                     <TextField {...params} label="Seleccione la sanción" />
                   )}
@@ -287,8 +339,15 @@ const NuevoElemento = props => {
               <Grid item xs={6} md={4}>
                 <Autocomplete
                   id="combo-box-demo"
-                  options={detalles}
-                  getOptionLabel={option => option.mult}
+                  name="multa"
+                  options={detalles3}
+                  onChange={(event, value) => {
+                    cambiarPerfil(prev => ({
+                      ...prev,
+                      multa: value.state
+                    }));
+                  }}
+                  getOptionLabel={option => option.state}
                   renderInput={params => (
                     <TextField {...params} label="Seleccione la multa" />
                   )}

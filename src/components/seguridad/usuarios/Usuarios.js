@@ -175,8 +175,8 @@ export default class Usuarios extends Component {
                     </TableCell>
                     <TableCell align="center">{person.stock}</TableCell>
                     <TableCell align="center">{person.horas_uso}</TableCell>
-                    <TableCell align="center">{person.categoria}</TableCell>
                     <TableCell align="center">{person.estado}</TableCell>
+                    <TableCell align="center">{person.categoria}</TableCell>
                     <TableCell align="center">
                       <IconButton>
                         <Link style={style.link} href="/usuario/detalles">
