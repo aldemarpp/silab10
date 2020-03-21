@@ -53,7 +53,8 @@ const style = {
     backgroundColor: "#e53935"
   },
   error: {
-    marginTop: 20
+    marginTop: 20,
+    marginBottom: 20
   }
 };
 
@@ -103,7 +104,7 @@ const NuevoTrabajo = () => {
 
   const element = [
     { state: "191158 - Aldemar" },
-    { state: "191158 - Armando" }
+    { state: "191161 - Armando" }
   ];
 
   return (
@@ -151,7 +152,14 @@ const NuevoTrabajo = () => {
             <Grid item xs={6} md={6}>
               <Autocomplete
                 id="combo-box-demo"
+                name="estudiante"
                 options={element}
+                onChange={(event, value) => {
+                  cambiarPerfil(prev => ({
+                    ...prev,
+                    estudiante: value.state
+                  }));
+                }}
                 getOptionLabel={option => option.state}
                 renderInput={params => (
                   <TextField {...params} label="Seleccione un estudiante" />

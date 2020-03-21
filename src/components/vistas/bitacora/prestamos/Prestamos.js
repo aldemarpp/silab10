@@ -152,7 +152,6 @@ export default class Prestamos extends Component {
                   <TableCell align="center">Asignatura-Programa</TableCell>
                   <TableCell align="center">Registrado Por</TableCell>
                   <TableCell align="center">Estado</TableCell>
-                  <TableCell align="center">Solicitud</TableCell>
                   <TableCell align="center">N° de Préstamos</TableCell>
                   <TableCell align="center">Opciones</TableCell>
                 </TableRow>
@@ -166,11 +165,12 @@ export default class Prestamos extends Component {
                     <TableCell align="center">{person.stock}</TableCell>
                     <TableCell align="center">{person.horas_uso}</TableCell>
                     <TableCell align="center">{person.estado}</TableCell>
-                    <TableCell align="center">{person.categoria}</TableCell>
                     <TableCell align="center">{person.stock}</TableCell>
                     <TableCell align="center">
                       <IconButton>
-                        <Icon path={mdiEye} size={1} color="red" />
+                        <Link style={style.link} href="/prestamo/detalles">
+                          <Icon path={mdiEye} size={1} color="red" />
+                        </Link>
                       </IconButton>
                     </TableCell>
                   </TableRow>

@@ -53,7 +53,8 @@ const style = {
     backgroundColor: "#e53935"
   },
   error: {
-    marginTop: 20
+    marginTop: 20,
+    marginBottom: 20
   }
 };
 
@@ -111,11 +112,15 @@ const NuevoMantenimiento = () => {
     });
   };
 
-  const element = [{ state: "Activo" }, { state: "Inactivo" }];
+  const element = [
+    { state: "455895 - Resistencia 2k" },
+    { state: "859565 - Computador Dell" },
+    { state: "213654 - Impresora Epson" }
+  ];
   const tipos = [
-    { clase: "Preventivo" },
-    { clase: "Correctivo" },
-    { clase: "Calibración" }
+    { state: "Preventivo" },
+    { state: "Correctivo" },
+    { state: "Calibración" }
   ];
 
   return (
@@ -164,19 +169,33 @@ const NuevoMantenimiento = () => {
           <Grid container spacing={2}>
             <Grid item xs={6} md={6}>
               <Autocomplete
-                id="combo-box-demo"
+                id="elemento"
+                name="elemento"
                 options={element}
+                onChange={(event, value) => {
+                  cambiarPerfil(prev => ({
+                    ...prev,
+                    elemento: value.state
+                  }));
+                }}
                 getOptionLabel={option => option.state}
                 renderInput={params => (
-                  <TextField {...params} label="Seleccione un elemento" />
+                  <TextField {...params} label="Seleccionar elemento" />
                 )}
               />
             </Grid>
-            <Grid item md={6} xs={6}>
+            <Grid item xs={6} md={6}>
               <Autocomplete
-                id="combo-box-demo"
+                id="tipo"
+                name="tipo"
                 options={tipos}
-                getOptionLabel={option => option.clase}
+                onChange={(event, value) => {
+                  cambiarPerfil(prev => ({
+                    ...prev,
+                    tipo: value.state
+                  }));
+                }}
+                getOptionLabel={option => option.state}
                 renderInput={params => (
                   <TextField {...params} label="Tipo de Mantenimiento" />
                 )}

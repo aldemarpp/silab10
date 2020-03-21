@@ -8,8 +8,7 @@ import {
   IconButton,
   Collapse,
   Typography,
-  TextField,
-  Button
+  TextField
 } from "@material-ui/core";
 import HomeIcon from "@material-ui/icons/Home";
 import { Alert } from "@material-ui/lab";
@@ -17,6 +16,8 @@ import { Close as CloseIcon } from "@material-ui/icons";
 //import fotoUsuarioTemp from "../../../../logo.svg";
 //import ImageUploader from "react-images-upload";
 //import { v4 as uuidv4 } from "uuid";
+
+import TablaLaboratorio from "./TablaLaboratorio";
 
 const style = {
   container: {
@@ -39,10 +40,10 @@ const style = {
     marginRight: "4px"
   },
   form: {
-    width: "100%"
+    width: "100%",
+    marginTop: 20
   },
   submit: {
-    marginTop: 30,
     marginBottom: 20
   },
   foto: {
@@ -56,7 +57,7 @@ const style = {
     marginTop: 20
   }
 };
-const UpdateLaboratorio = props => {
+const DetallesLaboratorio = props => {
   //crear state de usuario
   const [perfil, cambiarPerfil] = useState({
     codigo: "",
@@ -126,7 +127,9 @@ const UpdateLaboratorio = props => {
                   <HomeIcon style={style.homeIcon} />
                   Laboratorios
                 </Link>
-                <Typography color="textPrimary">Agregar Laboratorio</Typography>
+                <Typography color="textPrimary">
+                  Detalles Laboratorio
+                </Typography>
               </Breadcrumbs>
             </Grid>
           </Grid>
@@ -159,6 +162,7 @@ const UpdateLaboratorio = props => {
                   value={codigo}
                   onChange={cambiarDato}
                   fullWidth
+                  disabled={true}
                   label="Código"
                 />
               </Grid>
@@ -168,6 +172,7 @@ const UpdateLaboratorio = props => {
                   value={nombre}
                   onChange={cambiarDato}
                   fullWidth
+                  disabled={true}
                   label="Nombre"
                 />
               </Grid>
@@ -177,6 +182,7 @@ const UpdateLaboratorio = props => {
                   value={ubicacion}
                   onChange={cambiarDato}
                   fullWidth
+                  disabled={true}
                   label="Ubicación"
                 />
               </Grid>
@@ -186,6 +192,7 @@ const UpdateLaboratorio = props => {
                   value={observacion}
                   onChange={cambiarDato}
                   fullWidth
+                  disabled={true}
                   label="Observaciones"
                 />
               </Grid>
@@ -196,24 +203,12 @@ const UpdateLaboratorio = props => {
                   value={registro}
                   onChange={cambiarDato}
                   fullWidth
-                  label="Registrado Porregistro"
+                  disabled={true}
+                  label="Registrado Por"
                 />
               </Grid>
 
-              <Grid container justify="center">
-                <Grid item xs={6} md={4}>
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    fullWidth
-                    size="medium"
-                    color="primary"
-                    style={style.submit}
-                  >
-                    Guardar
-                  </Button>
-                </Grid>
-              </Grid>
+              <TablaLaboratorio />
             </Grid>
           </form>
         </Paper>
@@ -221,4 +216,4 @@ const UpdateLaboratorio = props => {
     </Fragment>
   );
 };
-export default UpdateLaboratorio;
+export default DetallesLaboratorio;

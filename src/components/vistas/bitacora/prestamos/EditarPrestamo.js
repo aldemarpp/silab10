@@ -56,7 +56,7 @@ const style = {
   }
 };
 
-const NuevoPrestamo = ({ crearPrestamo }) => {
+const EditarPrestamo = ({ crearPrestamo }) => {
   //crear state de usuario
   const [prestamo, cambiarPrestamo] = useState({
     estudiante: "",
@@ -156,7 +156,7 @@ const NuevoPrestamo = ({ crearPrestamo }) => {
               <HomeIcon style={style.homeIcon} />
               Préstamos
             </Link>
-            <Typography color="textPrimary">Registrar Préstamo</Typography>
+            <Typography color="textPrimary">Editar Préstamo</Typography>
           </Breadcrumbs>
         </Grid>
       </Grid>
@@ -311,8 +311,8 @@ const NuevoPrestamo = ({ crearPrestamo }) => {
   );
 };
 
-NuevoPrestamo.propTypes = {
+EditarPrestamo.propTypes = {
   crearPrestamo: PropTypes.func.isRequired
 };
 
-export default NuevoPrestamo;
+export default EditarPrestamo;

@@ -20,7 +20,13 @@ import {
   TextField
 } from "@material-ui/core";
 import Icon from "@mdi/react";
-import { mdiEye, mdiImage, mdiCircleEditOutline, mdiCardSearch } from "@mdi/js";
+import {
+  mdiEye,
+  mdiImage,
+  mdiCircleEditOutline,
+  mdiCheckboxMarkedCircle,
+  mdiCardSearch
+} from "@mdi/js";
 import HomeIcon from "@material-ui/icons/Home";
 
 const style = {
@@ -85,7 +91,7 @@ function searchingFor(term) {
   };
 }
 
-export default class Elementos extends Component {
+export default class Usuarios extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -173,11 +179,22 @@ export default class Elementos extends Component {
                     <TableCell align="center">{person.estado}</TableCell>
                     <TableCell align="center">
                       <IconButton>
-                        <Icon path={mdiEye} size={1} color="red" />
+                        <Link style={style.link} href="/usuario/detalles">
+                          <Icon path={mdiEye} size={1} color="red" />
+                        </Link>
+                      </IconButton>
+                      <IconButton>
+                        <Link style={style.link} href="/usuario/editar">
+                          <Icon
+                            path={mdiCircleEditOutline}
+                            size={1}
+                            color="red"
+                          />
+                        </Link>
                       </IconButton>
                       <IconButton>
                         <Icon
-                          path={mdiCircleEditOutline}
+                          path={mdiCheckboxMarkedCircle}
                           size={1}
                           color="red"
                         />

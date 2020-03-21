@@ -15,7 +15,9 @@ import {
 } from "@material-ui/core";
 import { CancelRounded } from "@material-ui/icons";
 import PropTypes from "prop-types";
-import NuevoPrestamo from "./NuevoPrestamo";
+import Icon from "@mdi/react";
+import { mdiEye, mdiCircleEditOutline } from "@mdi/js";
+import EditarUsuario from "./EditarUsuario";
 
 const style = {
   table: {
@@ -59,40 +61,44 @@ const style = {
   }
 };
 
-function Prestamo() {
+function UsuarioEditar() {
   //Préstamos en local storage
-  let prestamosIniciales = JSON.parse(localStorage.getItem("prestamos"));
-  if (!prestamosIniciales) {
-    prestamosIniciales = [];
+  let laboratoriosIniciales = JSON.parse(localStorage.getItem("usuarios"));
+  if (!laboratoriosIniciales) {
+    laboratoriosIniciales = [];
   }
 
-  // Arreglo de prestamos
-  const [prestamos, guardarPrestamos] = useState(prestamosIniciales);
+  // Arreglo de usuarios
+  const [usuarios, guardarLaboratorios] = useState(laboratoriosIniciales);
 
   //Realizar operaciones cuando el state cambia
   useEffect(() => {
-    let prestamosIniciales = JSON.parse(localStorage.getItem("prestamos"));
-    if (prestamosIniciales) {
-      localStorage.setItem("prestamos", JSON.stringify(prestamos));
+    let laboratoriosIniciales = JSON.parse(localStorage.getItem("usuarios"));
+    if (laboratoriosIniciales) {
+      localStorage.setItem("usuarios", JSON.stringify(usuarios));
     } else {
-      localStorage.setItem("prestamos", JSON.stringify([]));
+      localStorage.setItem("usuarios", JSON.stringify([]));
     }
-  }, [prestamos]);
+  }, [usuarios]);
 
-  // Funcion que tome los prestamos actuales y agregue los nuevos
-  const crearPrestamo = prestamo => {
-    guardarPrestamos([...prestamos, prestamo]);
+  // Funcion que tome los usuarios actuales y agregue los nuevos
+  const agregarLaboratorio = laboratorio => {
+    guardarLaboratorios([...usuarios, laboratorio]);
   };
 
-  //Función que elimina un prestamo por id
-  const eliminarPrestamo = id => {
-    const nuevosPrestamos = prestamos.filter(prestamo => prestamo.id !== id);
-    guardarPrestamos(nuevosPrestamos);
+  //Función que elimina un Laboratorio por id
+  const eliminarLaboratorio = id => {
+    const nuevosLaboratorios = usuarios.filter(
+      laboratorio => laboratorio.id !== id
+    );
+    guardarLaboratorios(nuevosLaboratorios);
   };
 
   //Mensaje condicional
   const titulo =
-    prestamos.length === 0 ? "No hay préstamos" : "Administra tus préstamos";
+    usuarios.length === 0
+      ? "No hay usuarios asignados"
+      : "Administra tus usuarios";
 
   return (
     <Fragment>
@@ -102,7 +108,7 @@ function Prestamo() {
         maxWidth="lg"
         justify="center"
       >
-        <NuevoPrestamo crearPrestamo={crearPrestamo} />
+        <EditarUsuario agregarLaboratorio={agregarLaboratorio} />
         <Paper style={style.paper}>
           <Typography>{titulo} </Typography>
         </Paper>
@@ -111,10 +117,10 @@ function Prestamo() {
             <TableHead style={style.tableHead}>
               <TableRow>
                 <TableCell style={style.tableCell} align="center">
-                  Elemento
+                  Laboratorio
                 </TableCell>
                 <TableCell style={style.tableCell} align="center">
-                  Cantidad
+                  Ubicación
                 </TableCell>
                 <TableCell style={style.tableCell} align="center">
                   Acciones
@@ -122,20 +128,26 @@ function Prestamo() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {prestamos.map(prestamo => (
+              {usuarios.map(laboratorio => (
                 <TableRow
-                  key={prestamo.id}
-                  prestamo={prestamo}
-                  eliminarPrestamo={eliminarPrestamo}
+                  key={laboratorio.id}
+                  laboratorio={laboratorio}
+                  eliminarLaboratorio={eliminarLaboratorio}
                 >
-                  <TableCell align="center">{prestamo.elemento}</TableCell>
-                  <TableCell align="center">{prestamo.cantidad} </TableCell>
+                  <TableCell align="center">{laboratorio.laboratory}</TableCell>
+                  <TableCell align="center">{laboratorio.ubicacion} </TableCell>
                   <TableCell align="center">
+                    <IconButton>
+                      <Icon path={mdiEye} size={1} color="red" />
+                    </IconButton>
+                    <IconButton>
+                      <Icon path={mdiCircleEditOutline} size={1} color="red" />
+                    </IconButton>
                     <IconButton
                       color="primary"
                       aria-label="upload picture"
                       component="span"
-                      onClick={() => eliminarPrestamo(prestamo.id)}
+                      onClick={() => eliminarLaboratorio(laboratorio.id)}
                     >
                       <CancelRounded fontSize="inherit" />
                     </IconButton>
@@ -172,9 +184,9 @@ function Prestamo() {
   );
 }
 
-Prestamo.propTypes = {
-  prestamo: PropTypes.func.isRequired,
-  eliminarPrestamo: PropTypes.func.isRequired
+UsuarioEditar.propTypes = {
+  laboratorio: PropTypes.func.isRequired,
+  eliminarLaboratorio: PropTypes.func.isRequired
 };
 
-export default Prestamo;
+export default UsuarioEditar;

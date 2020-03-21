@@ -65,20 +65,15 @@ const style = {
   }
 };
 
-const NuevoUsuario = ({ agregarLaboratorio }) => {
+const NuevoLaboratorio = ({ agregarLaboratorio }) => {
   //crear state de usuario
   const [laboratorio, cambiarLaboratorio] = useState({
     codigo: "",
     nombre: "",
-    apellidos: "",
-    nickname: "",
-    email: "",
-    password: "",
-    tipo: "",
-    telefono: "",
+    ubicacion: "",
+    observacion: "",
     registro: "",
-    laboratory: "",
-    ubicacion: ""
+    elemento: ""
   });
 
   //crear state de error
@@ -97,15 +92,10 @@ const NuevoUsuario = ({ agregarLaboratorio }) => {
   const {
     codigo,
     nombre,
-    apellidos,
-    nickname,
-    email,
-    password,
-    tipo,
-    telefono,
+    ubicacion,
+    observacion,
     registro,
-    laboratory,
-    ubicacion
+    elemento
   } = laboratorio;
 
   //funcion para cuando el usuario envia la informacion
@@ -116,15 +106,10 @@ const NuevoUsuario = ({ agregarLaboratorio }) => {
     if (
       codigo === "" ||
       nombre === "" ||
-      apellidos === "" ||
-      nickname === "" ||
-      email === "" ||
-      password === "" ||
-      tipo === "" ||
-      telefono === "" ||
+      ubicacion === "" ||
+      observacion === "" ||
       registro === "" ||
-      laboratory === "" ||
-      ubicacion === ""
+      elemento === ""
     ) {
       actualizarError(true);
       return;
@@ -144,15 +129,10 @@ const NuevoUsuario = ({ agregarLaboratorio }) => {
     cambiarLaboratorio({
       codigo: "",
       nombre: "",
-      apellidos: "",
-      nickname: "",
-      email: "",
-      password: "",
-      tipo: "",
-      telefono: "",
+      ubicacion: "",
+      observacion: "",
       registro: "",
-      laboratory: "",
-      ubicacion: ""
+      elemento: ""
     });
   };
 
@@ -161,15 +141,9 @@ const NuevoUsuario = ({ agregarLaboratorio }) => {
   }
 
   const element = [
-    { state: "Administrador" },
-    { state: "Laboratorista" },
-    { state: "Beca-Trabajo" }
-  ];
-
-  const labs = [
-    { state: "Robótica" },
-    { state: "Fisica" },
-    { state: "Química" }
+    { state: "455895 - Resistencia 2k" },
+    { state: "859565 - Computador Dell" },
+    { state: "213654 - Impresora Epson" }
   ];
 
   return (
@@ -178,11 +152,11 @@ const NuevoUsuario = ({ agregarLaboratorio }) => {
         <Grid container spacing={2}>
           <Grid item xs={12} md={12}>
             <Breadcrumbs aria-label="breadcrumb">
-              <Link color="inherit" style={style.link} href="/usuarios">
+              <Link color="inherit" style={style.link} href="/laboratorios">
                 <HomeIcon style={style.homeIcon} />
-                Usuarios
+                Laboratorios
               </Link>
-              <Typography color="textPrimary">Registrar Usuario</Typography>
+              <Typography color="textPrimary">Nuevo Laboratorio</Typography>
             </Breadcrumbs>
           </Grid>
         </Grid>
@@ -215,16 +189,7 @@ const NuevoUsuario = ({ agregarLaboratorio }) => {
                 value={codigo}
                 onChange={cambiarDato}
                 fullWidth
-                label="Ingrese su Código"
-              />
-            </Grid>
-            <Grid item md={6} xs={6}>
-              <TextField
-                name="nickname"
-                value={nickname}
-                onChange={cambiarDato}
-                fullWidth
-                label="Ingrese su Nickname"
+                label="Código"
               />
             </Grid>
             <Grid item md={6} xs={6}>
@@ -233,71 +198,36 @@ const NuevoUsuario = ({ agregarLaboratorio }) => {
                 value={nombre}
                 onChange={cambiarDato}
                 fullWidth
-                label="Ingrese su Nombre"
+                label="Nombre"
               />
             </Grid>
             <Grid item md={6} xs={6}>
               <TextField
-                name="apellidos"
-                value={apellidos}
+                name="ubicacion"
+                value={ubicacion}
                 onChange={cambiarDato}
                 fullWidth
-                label="Ingrese sus apellidos"
+                label="Ubicación"
               />
             </Grid>
             <Grid item md={6} xs={6}>
               <TextField
-                name="email"
-                value={email}
+                name="observacion"
+                value={observacion}
                 onChange={cambiarDato}
                 fullWidth
-                label="Ingrese su e-mail"
-              />
-            </Grid>
-            <Grid item md={6} xs={6}>
-              <TextField
-                type="password"
-                name="password"
-                value={password}
-                onChange={cambiarDato}
-                fullWidth
-                label="Ingrese su password"
+                multiline
+                label="Observaciones"
               />
             </Grid>
 
-            <Grid item md={4} xs={6}>
-              <TextField
-                name="telefono"
-                fullWidth
-                label="Teléfono"
-                value={telefono}
-                onChange={cambiarDato}
-              />
-            </Grid>
-            <Grid item md={4} xs={6}>
+            <Grid item md={6} xs={6}>
               <TextField
                 name="registro"
-                fullWidth
-                label="Registrado por"
                 value={registro}
                 onChange={cambiarDato}
-              />
-            </Grid>
-            <Grid item xs={6} md={4}>
-              <Autocomplete
-                id="combo-box-demo"
-                name="tipo"
-                options={element}
-                onChange={(event, value) => {
-                  cambiarLaboratorio(prev => ({
-                    ...prev,
-                    tipo: value.state
-                  }));
-                }}
-                getOptionLabel={option => option.state}
-                renderInput={params => (
-                  <TextField {...params} label="Tipo de Usuario" />
-                )}
+                fullWidth
+                label="Registrado Por"
               />
             </Grid>
           </Grid>
@@ -305,30 +235,21 @@ const NuevoUsuario = ({ agregarLaboratorio }) => {
             <Grid item md={12} xs={12}>
               <Divider />
             </Grid>
-            <Grid item xs={6} md={4}>
+            <Grid item xs={6} md={6}>
               <Autocomplete
-                id="laboratory"
-                name="laboratory"
-                options={labs}
+                id="elemento"
+                name="elemento"
+                options={element}
                 onChange={(event, value) => {
                   cambiarLaboratorio(prev => ({
                     ...prev,
-                    laboratory: value.state
+                    elemento: value.state
                   }));
                 }}
                 getOptionLabel={option => option.state}
                 renderInput={params => (
-                  <TextField {...params} label="Seleccionar Laboratorio" />
+                  <TextField {...params} label="Cargar elementos" />
                 )}
-              />
-            </Grid>
-            <Grid item md={4} xs={6}>
-              <TextField
-                name="ubicacion"
-                fullWidth
-                label="Ubicación"
-                value={ubicacion}
-                onChange={cambiarDato}
               />
             </Grid>
             <Grid item xs={6} md={2}>
@@ -367,7 +288,7 @@ const NuevoUsuario = ({ agregarLaboratorio }) => {
   );
 };
 
-NuevoUsuario.propTypes = {
+NuevoLaboratorio.propTypes = {
   agregarLaboratorio: PropTypes.func.isRequired
 };
-export default NuevoUsuario;
+export default NuevoLaboratorio;

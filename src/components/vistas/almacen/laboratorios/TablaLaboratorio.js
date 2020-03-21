@@ -1,37 +1,37 @@
-import React, { Component } from "react";
-//import { makeStyles } from "@material-ui/core/styles";
+import React, { Component, Fragment } from "react";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
+
 import {
   Container,
   Paper,
-  Grid,
-  Breadcrumbs,
-  Link,
-  Typography,
   IconButton,
-  Divider,
   InputAdornment,
   TextField
 } from "@material-ui/core";
 import Icon from "@mdi/react";
-import { mdiEye, mdiCardSearch, mdiCircleEditOutline } from "@mdi/js";
-import HomeIcon from "@material-ui/icons/Home";
+import {
+  mdiEye,
+  mdiImage,
+  mdiCheckboxMarkedCircle,
+  mdiCardSearch
+} from "@mdi/js";
+//import HomeIcon from "@material-ui/icons/Home";
+//import DetallesLaboratorio from "./DetallesLaboratorio";
 
 const style = {
   table: {
-    minWidth: 650,
-    paddingTop: "40px"
+    minWidth: 650
   },
   container: {
     paddingTop: "20px"
   },
   paper: {
-    marginTop: 8,
+    marginTop: 40,
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -54,7 +54,8 @@ const style = {
   },
   search: {
     width: 400,
-    marginBottom: 20
+    marginBottom: 20,
+    marginTop: 40
   }
 };
 
@@ -63,13 +64,14 @@ function createData(id, stock, horas_uso, categoria, estado) {
 }
 
 const rows = [
-  createData("23546 - Física", "12abv", "20", "A", "Activo"),
-  createData("35484 - Química", "10", "5", "A", "Activo"),
-  createData("56842 - Robótica", "7", "45", "B", "Desactivado"),
-  createData("74325 - Comunicación Social", "13", "100", "C", "Activo"),
-  createData("29886 - Televisión", "20", "200", "C", "Activo"),
-  createData("12325 - Radio", "4", "150", "C", "Activo")
+  createData("23546 - Arduino Nano", "12abv", "20", "A", "Activo"),
+  createData("35484 - Arduino Mega", "10", "5", "A", "Activo"),
+  createData("56842 - Tester Hx12", "7", "45", "B", "Desactivado"),
+  createData("74325 - Alineador estatio", "13", "100", "C", "Activo"),
+  createData("29886 - Teodolito", "20", "200", "C", "Activo"),
+  createData("12325 - Osciloscopio", "4", "150", "C", "Activo")
 ];
+
 function searchingFor(term) {
   return function(x) {
     return (
@@ -83,7 +85,7 @@ function searchingFor(term) {
   };
 }
 
-export default class Laboratorios extends Component {
+export default class TablaLaboratorio extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -100,34 +102,13 @@ export default class Laboratorios extends Component {
     const { term, rows } = this.state;
 
     return (
-      <Container
-        style={style.container}
-        component="main"
-        maxWidth="lg"
-        justify="center"
-      >
-        <Paper style={style.paper}>
-          <Grid container spacing={2}>
-            <Grid item xs={12} md={12}>
-              <Breadcrumbs aria-label="breadcrumb">
-                <Link color="inherit" style={style.link} href="">
-                  <HomeIcon style={style.homeIcon} />
-                  Laboratorios
-                </Link>
-                <Link
-                  color="inherit"
-                  style={style.link}
-                  href="/laboratorio/nuevo"
-                >
-                  <Typography color="textPrimary">Nuevo Laboratorio</Typography>
-                </Link>
-              </Breadcrumbs>
-            </Grid>
-            <Grid item md={12} xs={12}>
-              <Divider style={style.divider} />
-            </Grid>
-          </Grid>
-
+      <Fragment>
+        <Container
+          style={style.container}
+          component="main"
+          maxWidth="lg"
+          justify="center"
+        >
           <div className="App">
             <form>
               <TextField
@@ -151,32 +132,38 @@ export default class Laboratorios extends Component {
             <Table style={style.table} aria-label="customized table">
               <TableHead>
                 <TableRow>
-                  <TableCell align="center">Laboratorio</TableCell>
-                  <TableCell align="center">Ubicación</TableCell>
-                  <TableCell align="center">Observaciones</TableCell>
+                  <TableCell align="center">Elemento</TableCell>
+                  <TableCell align="center">Imagen</TableCell>
+                  <TableCell align="center">Stock</TableCell>
+                  <TableCell align="center">Horas de Uso</TableCell>
+                  <TableCell align="center">Categoría</TableCell>
+                  <TableCell align="center">Estado</TableCell>
                   <TableCell align="center">Opciones</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {rows.filter(searchingFor(term)).map(person => (
                   <TableRow key={person.id}>
-                    <TableCell align="center">{person.id}</TableCell>
+                    <TableCell component="th" scope="row" align="left">
+                      {person.id}
+                    </TableCell>
+                    <TableCell align="center">
+                      <Icon path={mdiImage} size={1} color="red" />
+                    </TableCell>
                     <TableCell align="center">{person.stock}</TableCell>
+                    <TableCell align="center">{person.horas_uso}</TableCell>
+                    <TableCell align="center">{person.categoria}</TableCell>
                     <TableCell align="center">{person.estado}</TableCell>
                     <TableCell align="center">
                       <IconButton>
-                        <Link style={style.link} href="/laboratorio/detalles">
-                          <Icon path={mdiEye} size={1} color="red" />
-                        </Link>
+                        <Icon path={mdiEye} size={1} color="red" />
                       </IconButton>
                       <IconButton>
-                        <Link style={style.link} href="/laboratorio/editar">
-                          <Icon
-                            path={mdiCircleEditOutline}
-                            size={1}
-                            color="red"
-                          />
-                        </Link>
+                        <Icon
+                          path={mdiCheckboxMarkedCircle}
+                          size={1}
+                          color="red"
+                        />
                       </IconButton>
                     </TableCell>
                   </TableRow>
@@ -184,8 +171,8 @@ export default class Laboratorios extends Component {
               </TableBody>
             </Table>
           </TableContainer>
-        </Paper>
-      </Container>
+        </Container>
+      </Fragment>
     );
   }
 }

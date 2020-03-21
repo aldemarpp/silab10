@@ -11,11 +11,14 @@ import {
   IconButton,
   Typography,
   Grid,
+  Link,
   Button
 } from "@material-ui/core";
 import { CancelRounded } from "@material-ui/icons";
 import PropTypes from "prop-types";
-import NuevoPrestamo from "./NuevoPrestamo";
+import Icon from "@mdi/react";
+import { mdiEye, mdiCircleEditOutline } from "@mdi/js";
+import EditarLaboratorio from "./EditarLaboratorio";
 
 const style = {
   table: {
@@ -59,40 +62,46 @@ const style = {
   }
 };
 
-function Prestamo() {
+function LaboratorioEditar() {
   //Préstamos en local storage
-  let prestamosIniciales = JSON.parse(localStorage.getItem("prestamos"));
-  if (!prestamosIniciales) {
-    prestamosIniciales = [];
+  let laboratoriosIniciales = JSON.parse(localStorage.getItem("laboratoriose"));
+  if (!laboratoriosIniciales) {
+    laboratoriosIniciales = [];
   }
 
-  // Arreglo de prestamos
-  const [prestamos, guardarPrestamos] = useState(prestamosIniciales);
+  // Arreglo de laboratorios
+  const [laboratoriose, guardarLaboratorios] = useState(laboratoriosIniciales);
 
   //Realizar operaciones cuando el state cambia
   useEffect(() => {
-    let prestamosIniciales = JSON.parse(localStorage.getItem("prestamos"));
-    if (prestamosIniciales) {
-      localStorage.setItem("prestamos", JSON.stringify(prestamos));
+    let laboratoriosIniciales = JSON.parse(
+      localStorage.getItem("laboratoriose")
+    );
+    if (laboratoriosIniciales) {
+      localStorage.setItem("laboratoriose", JSON.stringify(laboratoriose));
     } else {
-      localStorage.setItem("prestamos", JSON.stringify([]));
+      localStorage.setItem("laboratoriose", JSON.stringify([]));
     }
-  }, [prestamos]);
+  }, [laboratoriose]);
 
-  // Funcion que tome los prestamos actuales y agregue los nuevos
-  const crearPrestamo = prestamo => {
-    guardarPrestamos([...prestamos, prestamo]);
+  // Funcion que tome los laboratorios actuales y agregue los nuevos
+  const agregarLaboratorio = laboratorio => {
+    guardarLaboratorios([...laboratoriose, laboratorio]);
   };
 
-  //Función que elimina un prestamo por id
-  const eliminarPrestamo = id => {
-    const nuevosPrestamos = prestamos.filter(prestamo => prestamo.id !== id);
-    guardarPrestamos(nuevosPrestamos);
+  //Función que elimina un Laboratorio por id
+  const eliminarLaboratorio = id => {
+    const nuevosLaboratorios = laboratoriose.filter(
+      laboratorio => laboratorio.id !== id
+    );
+    guardarLaboratorios(nuevosLaboratorios);
   };
 
   //Mensaje condicional
   const titulo =
-    prestamos.length === 0 ? "No hay préstamos" : "Administra tus préstamos";
+    laboratoriose.length === 0
+      ? "No hay laboratorios asignados"
+      : "Administra tus laboratorios";
 
   return (
     <Fragment>
@@ -102,7 +111,7 @@ function Prestamo() {
         maxWidth="lg"
         justify="center"
       >
-        <NuevoPrestamo crearPrestamo={crearPrestamo} />
+        <EditarLaboratorio agregarLaboratorio={agregarLaboratorio} />
         <Paper style={style.paper}>
           <Typography>{titulo} </Typography>
         </Paper>
@@ -111,10 +120,7 @@ function Prestamo() {
             <TableHead style={style.tableHead}>
               <TableRow>
                 <TableCell style={style.tableCell} align="center">
-                  Elemento
-                </TableCell>
-                <TableCell style={style.tableCell} align="center">
-                  Cantidad
+                  Laboratorio
                 </TableCell>
                 <TableCell style={style.tableCell} align="center">
                   Acciones
@@ -122,20 +128,28 @@ function Prestamo() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {prestamos.map(prestamo => (
+              {laboratoriose.map(laboratorio => (
                 <TableRow
-                  key={prestamo.id}
-                  prestamo={prestamo}
-                  eliminarPrestamo={eliminarPrestamo}
+                  key={laboratorio.id}
+                  laboratorio={laboratorio}
+                  eliminarLaboratorio={eliminarLaboratorio}
                 >
-                  <TableCell align="center">{prestamo.elemento}</TableCell>
-                  <TableCell align="center">{prestamo.cantidad} </TableCell>
+                  <TableCell align="center">{laboratorio.elemento}</TableCell>
+
                   <TableCell align="center">
+                    <IconButton>
+                      <Link style={style.link} href="/laboratorio/detalles">
+                        <Icon path={mdiEye} size={1} color="red" />
+                      </Link>
+                    </IconButton>
+                    <IconButton>
+                      <Icon path={mdiCircleEditOutline} size={1} color="red" />
+                    </IconButton>
                     <IconButton
                       color="primary"
                       aria-label="upload picture"
                       component="span"
-                      onClick={() => eliminarPrestamo(prestamo.id)}
+                      onClick={() => eliminarLaboratorio(laboratorio.id)}
                     >
                       <CancelRounded fontSize="inherit" />
                     </IconButton>
@@ -172,9 +186,9 @@ function Prestamo() {
   );
 }
 
-Prestamo.propTypes = {
-  prestamo: PropTypes.func.isRequired,
-  eliminarPrestamo: PropTypes.func.isRequired
+LaboratorioEditar.propTypes = {
+  laboratorio: PropTypes.func.isRequired,
+  eliminarLaboratorio: PropTypes.func.isRequired
 };
 
-export default Prestamo;
+export default LaboratorioEditar;

@@ -1,37 +1,38 @@
-import React, { Component } from "react";
-//import { makeStyles } from "@material-ui/core/styles";
+import React, { Component, Fragment } from "react";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
+
 import {
   Container,
   Paper,
-  Grid,
-  Breadcrumbs,
   Link,
-  Typography,
   IconButton,
-  Divider,
   InputAdornment,
   TextField
 } from "@material-ui/core";
+import { CancelRounded } from "@material-ui/icons";
 import Icon from "@mdi/react";
-import { mdiEye, mdiCardSearch, mdiCircleEditOutline } from "@mdi/js";
-import HomeIcon from "@material-ui/icons/Home";
+import {
+  mdiCircleEditOutline,
+  mdiCheckboxMarkedCircle,
+  mdiCardSearch
+} from "@mdi/js";
+//import HomeIcon from "@material-ui/icons/Home";
+//import DetallesLaboratorio from "./DetallesLaboratorio";
 
 const style = {
   table: {
-    minWidth: 650,
-    paddingTop: "40px"
+    minWidth: 650
   },
   container: {
     paddingTop: "20px"
   },
   paper: {
-    marginTop: 8,
+    marginTop: 40,
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -54,36 +55,74 @@ const style = {
   },
   search: {
     width: 400,
-    marginBottom: 20
+    marginBottom: 20,
+    marginTop: 40
   }
 };
 
-function createData(id, stock, horas_uso, categoria, estado) {
-  return { id, stock, horas_uso, categoria, estado };
+function createData(id, cantidad, f_limite, f_devolucion, estado) {
+  return { id, cantidad, f_limite, f_devolucion, estado };
 }
 
 const rows = [
-  createData("23546 - Física", "12abv", "20", "A", "Activo"),
-  createData("35484 - Química", "10", "5", "A", "Activo"),
-  createData("56842 - Robótica", "7", "45", "B", "Desactivado"),
-  createData("74325 - Comunicación Social", "13", "100", "C", "Activo"),
-  createData("29886 - Televisión", "20", "200", "C", "Activo"),
-  createData("12325 - Radio", "4", "150", "C", "Activo")
+  createData(
+    "23546 - Arduino Nano",
+    "8",
+    "2020:01:10 03:20:16",
+    "2020:01:10 03:20:16",
+    "Activo"
+  ),
+  createData(
+    "35484 - Arduino Mega",
+    "10",
+    "2020:01:10 03:20:16",
+    "2020:01:10 03:20:16",
+    "Activo"
+  ),
+  createData(
+    "56842 - Tester Hx12",
+    "7",
+    "2020:01:10 03:20:16",
+    "2020:01:10 03:20:16",
+    "Desactivado"
+  ),
+  createData(
+    "74325 - Alineador estatio",
+    "5",
+    "2020:01:10 03:20:16",
+    "2020:01:10 03:20:16",
+    "Activo"
+  ),
+  createData(
+    "29886 - Teodolito",
+    "20",
+    "2020:01:10 03:20:16",
+    "2020:01:10 03:20:16",
+    "Activo"
+  ),
+  createData(
+    "12325 - Osciloscopio",
+    "4",
+    "2020:01:10 03:20:16",
+    "2020:01:10 03:20:16",
+    "Activo"
+  )
 ];
+
 function searchingFor(term) {
   return function(x) {
     return (
       x.id.toLowerCase().includes(term.toLowerCase()) ||
-      x.stock.toLowerCase().includes(term.toLowerCase()) ||
-      x.horas_uso.toLowerCase().includes(term.toLowerCase()) ||
-      x.categoria.toLowerCase().includes(term.toLowerCase()) ||
+      x.cantidad.toLowerCase().includes(term.toLowerCase()) ||
+      x.f_limite.toLowerCase().includes(term.toLowerCase()) ||
+      x.f_devolucion.toLowerCase().includes(term.toLowerCase()) ||
       x.estado.toLowerCase().includes(term.toLowerCase()) ||
       !term
     );
   };
 }
 
-export default class Laboratorios extends Component {
+export default class TablaPrestamo extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -100,34 +139,13 @@ export default class Laboratorios extends Component {
     const { term, rows } = this.state;
 
     return (
-      <Container
-        style={style.container}
-        component="main"
-        maxWidth="lg"
-        justify="center"
-      >
-        <Paper style={style.paper}>
-          <Grid container spacing={2}>
-            <Grid item xs={12} md={12}>
-              <Breadcrumbs aria-label="breadcrumb">
-                <Link color="inherit" style={style.link} href="">
-                  <HomeIcon style={style.homeIcon} />
-                  Laboratorios
-                </Link>
-                <Link
-                  color="inherit"
-                  style={style.link}
-                  href="/laboratorio/nuevo"
-                >
-                  <Typography color="textPrimary">Nuevo Laboratorio</Typography>
-                </Link>
-              </Breadcrumbs>
-            </Grid>
-            <Grid item md={12} xs={12}>
-              <Divider style={style.divider} />
-            </Grid>
-          </Grid>
-
+      <Fragment>
+        <Container
+          style={style.container}
+          component="main"
+          maxWidth="lg"
+          justify="center"
+        >
           <div className="App">
             <form>
               <TextField
@@ -151,26 +169,34 @@ export default class Laboratorios extends Component {
             <Table style={style.table} aria-label="customized table">
               <TableHead>
                 <TableRow>
-                  <TableCell align="center">Laboratorio</TableCell>
-                  <TableCell align="center">Ubicación</TableCell>
-                  <TableCell align="center">Observaciones</TableCell>
+                  <TableCell align="center">Elemento</TableCell>
+                  <TableCell align="center">Cantidad</TableCell>
+                  <TableCell align="center">Fecha Solicitud</TableCell>
+                  <TableCell align="center">Fecha Límite</TableCell>
+                  <TableCell align="center">Fecha Devolución</TableCell>
                   <TableCell align="center">Opciones</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {rows.filter(searchingFor(term)).map(person => (
                   <TableRow key={person.id}>
-                    <TableCell align="center">{person.id}</TableCell>
-                    <TableCell align="center">{person.stock}</TableCell>
-                    <TableCell align="center">{person.estado}</TableCell>
+                    <TableCell component="th" scope="row" align="left">
+                      {person.id}
+                    </TableCell>
+                    <TableCell align="center">{person.cantidad}</TableCell>
+                    <TableCell align="center">{person.f_limite}</TableCell>
+                    <TableCell align="center">{person.f_limite}</TableCell>
+                    <TableCell align="center">{person.f_devolucion}</TableCell>
                     <TableCell align="center">
                       <IconButton>
-                        <Link style={style.link} href="/laboratorio/detalles">
-                          <Icon path={mdiEye} size={1} color="red" />
-                        </Link>
+                        <Icon
+                          path={mdiCheckboxMarkedCircle}
+                          size={1}
+                          color="red"
+                        />
                       </IconButton>
                       <IconButton>
-                        <Link style={style.link} href="/laboratorio/editar">
+                        <Link style={style.link} href="/prestamo/editar">
                           <Icon
                             path={mdiCircleEditOutline}
                             size={1}
@@ -178,14 +204,21 @@ export default class Laboratorios extends Component {
                           />
                         </Link>
                       </IconButton>
+                      <IconButton
+                        color="primary"
+                        aria-label="upload picture"
+                        component="span"
+                      >
+                        <CancelRounded fontSize="inherit" />
+                      </IconButton>
                     </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
             </Table>
           </TableContainer>
-        </Paper>
-      </Container>
+        </Container>
+      </Fragment>
     );
   }
 }

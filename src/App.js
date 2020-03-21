@@ -5,13 +5,21 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 import theme from "./theme/theme";
 import Grid from "@material-ui/core/Grid";
-import PerfilUsuario from "./components/seguridad/usuarios/PerfilUsuario";
-import Usuarios from "./components/seguridad/usuarios/Usuarios";
-import NuevoUsuario from "./components/seguridad/usuarios/NuevoUsuario";
 import Estudiantes from "./components/seguridad/personas/estudiantes/Estudiantes";
 import UpdateEstudiante from "./components/seguridad/personas/estudiantes/UpdateEstudiante";
+import PerfilUsuario from "./components/seguridad/usuarios/PerfilUsuario";
+import Usuarios from "./components/seguridad/usuarios/Usuarios";
+import Usuario from "./components/seguridad/usuarios/Usuario";
+import DetallesUsuario from "./components/seguridad/usuarios/DetallesUsuario";
+import UsuarioEditar from "./components/seguridad/usuarios/UsuarioEditar";
+import Prestamos from "./components/vistas/bitacora/prestamos/Prestamos";
+import Prestamo from "./components/vistas/bitacora/prestamos/Prestamo";
+import DetallesPrestamo from "./components/vistas/bitacora/prestamos/DetallesPrestamo";
+import PrestamoEditar from "./components/vistas/bitacora/prestamos/PrestamoEditar";
 import Laboratorios from "./components/vistas/almacen/laboratorios/Laboratorios";
-import UpdateLaboratorio from "./components/vistas/almacen/laboratorios/UpdateLaboratorio";
+import Laboratorio from "./components/vistas/almacen/laboratorios/Laboratorio";
+import DetallesLaboratorio from "./components/vistas/almacen/laboratorios/DetallesLaboratorio";
+import LaboratorioEditar from "./components/vistas/almacen/laboratorios/LaboratorioEditar";
 //import RegistrarUsuario from "./components/seguridad/usuarios/RegistrarUsuario";
 import Login from "./components/seguridad/Login";
 import NuevoElemento from "./components/vistas/almacen/elementos/NuevoElemento";
@@ -23,9 +31,6 @@ import NuevoMantenimiento from "./components/vistas/bitacora/mantenimientos/Nuev
 import Trabajos from "./components/vistas/bitacora/trabajos/Trabajos";
 import NuevoTrabajo from "./components/vistas/bitacora/trabajos/NuevoTrabajo";
 //import EditarTrabajo from "./components/vistas/bitacora/trabajos/EditarTrabajo";
-import Prestamos from "./components/vistas/bitacora/prestamos/Prestamos";
-import Prestamo from "./components/vistas/bitacora/prestamos/Prestamo";
-//import NuevoPrestamo from "./components/vistas/bitacora/prestamos/NuevoPrestamo";
 //import countries from "./countries";
 //import AutoCompleteText from "./AutoCompleteText";
 //import Search from "../src/Search";
@@ -53,10 +58,30 @@ function App(props) {
 
             <Route path="/prestamos" exact component={Prestamos}></Route>
             <Route path="/prestamo/nuevo" exact component={Prestamo}></Route>
+            <Route
+              path="/prestamo/detalles"
+              exact
+              component={DetallesPrestamo}
+            ></Route>
+            <Route
+              path="/prestamo/editar"
+              exact
+              component={PrestamoEditar}
+            ></Route>
             <Route path="/auth/login" exact component={Login}></Route>
             <Route path="/auth/perfil" exact component={PerfilUsuario}></Route>
             <Route path="/usuarios" exact component={Usuarios}></Route>
-            <Route path="/usuario/nuevo" exact component={NuevoUsuario}></Route>
+            <Route path="/usuario/nuevo" exact component={Usuario}></Route>
+            <Route
+              path="/usuario/detalles"
+              exact
+              component={DetallesUsuario}
+            ></Route>
+            <Route
+              path="/usuario/editar"
+              exact
+              component={UsuarioEditar}
+            ></Route>
             <Route path="/estudiantes" exact component={Estudiantes}></Route>
             <Route
               path="/estudiante/update"
@@ -65,9 +90,19 @@ function App(props) {
             ></Route>
             <Route path="/laboratorios" exact component={Laboratorios}></Route>
             <Route
-              path="/laboratorio/update"
+              path="/laboratorio/nuevo"
               exact
-              component={UpdateLaboratorio}
+              component={Laboratorio}
+            ></Route>
+            <Route
+              path="/laboratorio/detalles"
+              exact
+              component={DetallesLaboratorio}
+            ></Route>
+            <Route
+              path="/laboratorio/editar"
+              exact
+              component={LaboratorioEditar}
             ></Route>
             <Route
               path="/mantenimientos"

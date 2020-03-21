@@ -15,7 +15,7 @@ import {
 } from "@material-ui/core";
 import { CancelRounded } from "@material-ui/icons";
 import PropTypes from "prop-types";
-import NuevoPrestamo from "./NuevoPrestamo";
+import EditarPrestamo from "./EditarPrestamo";
 
 const style = {
   table: {
@@ -59,7 +59,7 @@ const style = {
   }
 };
 
-function Prestamo() {
+function PrestamoEditar() {
   //Préstamos en local storage
   let prestamosIniciales = JSON.parse(localStorage.getItem("prestamos"));
   if (!prestamosIniciales) {
@@ -102,7 +102,7 @@ function Prestamo() {
         maxWidth="lg"
         justify="center"
       >
-        <NuevoPrestamo crearPrestamo={crearPrestamo} />
+        <EditarPrestamo crearPrestamo={crearPrestamo} />
         <Paper style={style.paper}>
           <Typography>{titulo} </Typography>
         </Paper>
@@ -172,9 +172,9 @@ function Prestamo() {
   );
 }
 
-Prestamo.propTypes = {
+PrestamoEditar.propTypes = {
   prestamo: PropTypes.func.isRequired,
   eliminarPrestamo: PropTypes.func.isRequired
 };
 
-export default Prestamo;
+export default PrestamoEditar;

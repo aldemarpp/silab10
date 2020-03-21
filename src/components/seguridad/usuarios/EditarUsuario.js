@@ -65,7 +65,7 @@ const style = {
   }
 };
 
-const NuevoUsuario = ({ agregarLaboratorio }) => {
+const EditarUsuario = ({ agregarLaboratorio }) => {
   //crear state de usuario
   const [laboratorio, cambiarLaboratorio] = useState({
     codigo: "",
@@ -182,7 +182,7 @@ const NuevoUsuario = ({ agregarLaboratorio }) => {
                 <HomeIcon style={style.homeIcon} />
                 Usuarios
               </Link>
-              <Typography color="textPrimary">Registrar Usuario</Typography>
+              <Typography color="textPrimary">Editar Usuario</Typography>
             </Breadcrumbs>
           </Grid>
         </Grid>
@@ -367,7 +367,7 @@ const NuevoUsuario = ({ agregarLaboratorio }) => {
   );
 };
 
-NuevoUsuario.propTypes = {
+EditarUsuario.propTypes = {
   agregarLaboratorio: PropTypes.func.isRequired
 };
-export default NuevoUsuario;
+export default EditarUsuario;
