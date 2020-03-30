@@ -155,9 +155,15 @@ const NuevoTrabajo = () => {
                 name="estudiante"
                 options={element}
                 onChange={(event, value) => {
+                  let valor;
+                  if (value !== null) {
+                    valor = value.state;
+                  } else {
+                    valor = "";
+                  }
                   cambiarPerfil(prev => ({
                     ...prev,
-                    estudiante: value.state
+                    estudiante: valor
                   }));
                 }}
                 getOptionLabel={option => option.state}
